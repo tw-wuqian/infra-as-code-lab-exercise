@@ -24,7 +24,7 @@ If you don't understand or need to brush up on AWS VPCs and networking before st
 
 The network subnet design has been added in this session.
 
-![Architecture diagram](https://github.com/tw-infrastructure-academy/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_2.png)
+![Architecture diagram](https://github.com/twlabs/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_2.png)
 
 
 ### Pre-requisites, Deploy and Clean Up Instructions

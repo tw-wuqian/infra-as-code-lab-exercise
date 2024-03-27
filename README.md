@@ -87,9 +87,7 @@ Run the following command to deploy the Terraform and create the resources.
 terraform apply
 ```
 
-Once the script has completed it should return the load balancer address in the output.  After a minute or so if you access the URL you should be able to hopefully see the demo website.
-
-You should also log in to the AWS console and have a look at the resources that were created (e.g. EC2, ASG, LB, VPC, etc).
+Once the script has completed it should return the Terraform output data.  You should also log in to the AWS console and have a look at the resources that were created.
 
 Run the following command to view the resources that Terraform created:
 

@@ -22,7 +22,7 @@ You will learn how to implement Terraform meta-arguments and functions which hel
 
 Users connect to the application through a public facing application load balancer which has a target of an ECS task container which resides in the private subnets spread across two AZs.  In this session we're adding the load balancer and the ECS cluster as well as an ECR.
 
-![Architecture diagram](https://github.com/tw-infrastructure-academy/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_4.png)
+![Architecture diagram](https://github.com/twlabs/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_4.png)
 
 
 ### Pre-requisites, Deploy and Clean Up Instructions
