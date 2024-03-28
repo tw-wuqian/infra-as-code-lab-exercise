@@ -59,7 +59,7 @@ provider "aws" {
 }
 ```
 
-4. Follow the instructions in the prerequisites section ye above to authenticate to AWS via the command line, see root level [README](../README.md).
+4. Follow the prerequisites to authenticate to AWS via the command line, see root level [README](../README.md).
 
 5. Run the following commands to test deploying your VPC resource:
 
