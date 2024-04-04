@@ -35,7 +35,7 @@ sso_start_url = https://thoughtworks-sso.awsapps.com/start
 sso_region = eu-central-1
 sso_account_id = 510769981514
 sso_role_name = PowerPlusRole_InfraAcademy
-region = ap-southeast-2
+region = <TO BE UPDATED>
 output = json
 ```
 
@@ -45,7 +45,7 @@ Now run the following command in your terminal.
 aws sso login --profile twinfra
 ```
 
-It should open a browser window and will prompt you to authorise the request.  Once authorised you should run the following to set your AWS profile in your terminal (update the profile name to the profile you are using):
+It should open a browser window and will prompt you to authorise the request. Once authorised you should run the following to set your AWS profile in your terminal (update the profile name to the profile you are using):
 
 ```
 export AWS_PROFILE=twinfra
@@ -64,7 +64,7 @@ aws ec2 describe-regions
 
 #### Update the Region (If Applicable)
 
-In the region variable or in the *.tfvars file there is a value specified for the region, you should update the region to match your AWS profile region.
+In the region variable or in the *.tfvars file there is a value specified for the region, you should update the region to match your AWS profile region (NOT the `sso-region`, just the `region` option).
 
 
 ### Deploy Instructions:
