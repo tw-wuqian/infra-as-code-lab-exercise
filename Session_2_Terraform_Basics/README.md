@@ -2,6 +2,8 @@
 
 ## Session 2 - Terraform Basics
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding.
+
 ### Overview
 
 You will learn how to create a fully functioning network in AWS that spans two availability zones in a single region.  Creating a network that spans two availability zones will allow you to architect a solution that can become highly available (e.g. if one AZ goes down then your solution can flip over to utilise the other AZ).  You should start off with the same code you have from session 1 and refactor it based on the exercises below.  You will also explore some of the cost related AWS services available to you.

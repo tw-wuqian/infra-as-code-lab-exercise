@@ -2,6 +2,8 @@
 
 ## Session 5 - Terraform Modules
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 4 before proceeding.
+
 ### Overview
 
 You will learn how to implement both public and private modules as well as create a working web based solution with a database backend.

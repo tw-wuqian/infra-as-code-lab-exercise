@@ -2,6 +2,8 @@
 
 ## Session 3 Terraform State
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 2 before proceeding.
+
 ### Overview
 
 You will learn how to set up remote state management for your Terraform code base as well as learn about importing, moving and removing resources from your Terraform state.  You will also learn about how AWS Service Control Policies can help with cloud cost management.
