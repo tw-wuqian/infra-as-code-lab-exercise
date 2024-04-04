@@ -2,7 +2,7 @@
 
 ## Overview
 
-This code repository accompanies the slides, videos and demo code for the Infra as Code course which has 6 sessions.  There is a folder for each session which contains the session's lab exercises.  As we work through the sessions we will make improvements to the code base which builds a working solution.  In each of the sessions we will follow the same authentication, deployment and destruction processes which can be found below.  The course trainer will share the solutions to the lab exercises after you have completed them.
+This code repository accompanies the slides, videos and demo code for the Infra as Code course which has 6 sessions. There is a folder for each session which contains the session's lab exercises. As we work through the sessions we will make improvements to the code base which builds a working solution. In each of the sessions we will follow the same authentication, deployment and destruction processes which can be found below. The course trainer will share the solutions to the lab exercises after you have completed them.
 
 ## Sessions
 
@@ -21,7 +21,7 @@ You need to have access to the TW_TDEV_INFRACA:CORTEAM:DEV AWS account (51076998
 
 #### AWS CLI Installed and Configured
 
-To run Terraform we need to authenticate and it's easiest to do that using the AWS CLI.  To install aws cli run the following if it's not already installed:
+To run Terraform we need to authenticate and it's easiest to do that using the AWS CLI. To install aws cli run the following if it's not already installed:
 
 ```
 brew install awscli
@@ -51,7 +51,7 @@ It should open a browser window and will prompt you to authorise the request. On
 export AWS_PROFILE=twinfra
 ```
 
-Now if you run any AWS commands it will detect your already authenticated profile and should be able to interact with AWS, test it out by running  the following command:
+Now if you run any AWS commands it will detect your already authenticated profile and should be able to interact with AWS, test it out by running the following command:
 
 ```
 aws ec2 describe-regions
@@ -61,11 +61,9 @@ aws ec2 describe-regions
 
 [Installation instructions](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
-
 #### Update the Region (If Applicable)
 
-In the region variable or in the *.tfvars file there is a value specified for the region, you should update the region to match your AWS profile region (NOT the `sso-region`, just the `region` option).
-
+In the region variable or in the \*.tfvars file there is a value specified for the region, you should update the region to match your AWS profile region (NOT the `sso-region`, just the `region` option).
 
 ### Deploy Instructions:
 
@@ -87,7 +85,7 @@ Run the following command to deploy the Terraform and create the resources.
 terraform apply
 ```
 
-Once the script has completed it should return the Terraform output data.  You should also log in to the AWS console and have a look at the resources that were created.
+Once the script has completed it should return the Terraform output data. You should also log in to the AWS console and have a look at the resources that were created.
 
 Run the following command to view the resources that Terraform created:
 
