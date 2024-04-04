@@ -32,7 +32,7 @@ Hint: In the provider block, region variable or the *.tfvars file there is a val
 
 ### Steps/Tasks for Goals 1 and 2
 
-1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally.  Navigate to this repo as you will now work from this location for all the rest of the lab exercises.
+1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.
 
 2. Create a main.tf at the root of the repo and add a [VPC](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) resource with the following attributes:
     - cidr_block           = "192.168.1.0/25"
@@ -67,17 +67,24 @@ terraform init
 terraform plan
 terraform apply
 terraform apply --auto-approve
+```
+
+6. Confirm that the VPC was successfully created and tagged by inspecting the AWS resources either via the AWS CLI or via the AWS console.
+
+7. Run the following command to destroy the created VPC resource:
+
+```
 terraform destroy
 ```
 
-6. Create a .gitignore file in the root of your repo and add the following code:
+8. Create a .gitignore file in the root of your repo and add the following code:
 
 ```
 *tfstate*
 *.terraform*
 ```
 
-7. Commit your code to your repo and name the commit 'Session 1'.
+9. Commit your code to your repo and name the commit 'Session 1'.
 
 
 ### Steps/Tasks for Goal 3 - FinOps
