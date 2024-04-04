@@ -8,7 +8,7 @@ These lab exercises are to be completed in order, you will need to have complete
 
 You will learn how to create a fully functioning network in AWS that spans two availability zones in a single region.  Creating a network that spans two availability zones will allow you to architect a solution that can become highly available (e.g. if one AZ goes down then your solution can flip over to utilise the other AZ).  You should start off with the same code you have from session 1 and refactor it based on the exercises below.  You will also explore some of the cost related AWS services available to you.
 
-If you don't understand or need to brush up on AWS VPCs and networking before starting this lab exercise then I would recommend this [Campus course](https://campus.thoughtworks.net/learn/courses/48524/networking-administration-infra-engineer-self-serve/lessons/131363/aws-networking).  This should help you understand the basics around VPCs, networking and routing.
+If you don't understand or need to brush up on AWS VPCs and networking before starting this lab exercise then I would recommend this [Campus course](https://campus.thoughtworks.net/learn/course/48524/networking-administration-infra-engineer-self-serve?generated_by=17335&hash=2960e1f09d8f0c331cac2f27170a50496b96ab62).  This should help you understand the basics around VPCs, networking and routing.
 
 
 ### Session 2 Goals
