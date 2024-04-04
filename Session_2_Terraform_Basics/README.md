@@ -118,7 +118,7 @@ Troubleshoot any errors before proceeding.
 
 10. Now we will add the route tables and associate them with the subnets.  We will create a public route table which will have a route to the internet (0.0.0.0) via the internet gateway resource.  We will also create a private route table which will have a route to the internet (0.0.0.0) via the NAT gateway resource.  We will then associate the public subnet resources with the public route table and the private subnet resources with the private route table.  
 
-In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (they should only have a single route for 0.0.0.0/0).  
+In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (each route table should only have a single route for 0.0.0.0/0).  
 
 Now add 4 x [Route Table Association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) resources, associate the public subnets with the public route table and the private subnets with the private route table (this is not very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) but we will make improvements here in later sessions).
 
