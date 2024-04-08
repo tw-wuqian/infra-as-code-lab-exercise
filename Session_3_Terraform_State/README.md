@@ -24,7 +24,7 @@ You will learn how to set up remote state management for your Terraform code bas
 
 The network design has been accompanied by the remote state management using S3 and DynamodDB in this session.
 
-![Architecture diagram](https://github.com/twlabs/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_3.png)
+![Architecture diagram](../images/AWS_Architecture_Session_3.png)
 
 
 ### Pre-requisites, Deploy and Clean Up Instructions

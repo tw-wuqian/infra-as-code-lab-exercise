@@ -24,7 +24,7 @@ You will learn how to implement both public and private modules as well as creat
 
 Users connect to the application through a public facing load balancer which has a target of an ECS task container which resides in the private subnets spread across two AZs.  In this session we're adding an RDS database and pushing a container image to ECR to get consumed by the ECS cluster service and run our container based application.
 
-![Architecture diagram](https://github.com/twlabs/infra-as-code-lab-exercises/blob/main/images/AWS_Architecture_Session_5.png)
+![Architecture diagram](../images/AWS_Architecture_Session_5.png)
 
 
 ### Pre-requisites, Deploy and Clean Up Instructions
