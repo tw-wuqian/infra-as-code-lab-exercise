@@ -65,7 +65,7 @@ number_of_private_subnets = 2
 number_of_secure_subnets  = 2
 ```
 
-You should also be able to reduce the number of aws_route_table_association from 4 down to 2 using count, for or for_each loops.  You will still create exactly the same amount of resources but the code will be cleaner.
+You should also be able to reduce the number of aws_route_table_association resources from 4 down to 2 using count, for or for_each loops.  You will still create exactly the same amount of resources but the code will be cleaner.
 
 Here's another hint, to resolve the subnet availability zone allocation you could use the [data aws_availability_zones](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) resource to get a list of all the AZs in your region:
 
