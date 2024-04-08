@@ -31,7 +31,7 @@ The network design has been accompanied by the remote state management using S3 
 
 Please read the root level [README](../README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
 
-Hint: In the provider block, region variable or the *.tfvars file there is a value specified for the region, you should update this to match your AWS profile region.
+Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
 
 ### Steps/Tasks for Goal 1
@@ -40,18 +40,18 @@ We are creating an independent folder inside your project that has Terraform fil
 
 1. Create a backend_support folder at the root of your solution, this will store the code for the resources necessary for remote state management.
 
-2. In this folder create s3.tf and add in the following resources:
-    - 1 x [S3 Bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket), provide a suitable name for the Terraform resource and name the S3 bucket "${var.prefix}-tfstate", also add a force_destroy attribute which has a value of true to your bucket (you wouldn't normally wish to do this for your tfstate but as we are running Terraform destroy regularly because this is a temporary solution it makes sense).
+2. In this folder create `s3.tf` and add in the following resources:
+    - 1 x [S3 Bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket), provide a suitable name for the Terraform resource and name the S3 bucket `${var.prefix}-tfstate`, also add a force_destroy attribute which has a value of true to your bucket (you wouldn't normally wish to do this for your tfstate but as we are running Terraform destroy regularly because this is a temporary solution it makes sense).
     - You need to also add three other related S3 resources (find these resources in the online Terraform Registry and then add them into your code) that will enable you to do the following:
         - Enable bucket versioning for the S3 bucket
         - Ensure that the S3 bucket is using encryption algorithm AES256
         - Ensure that all public access is blocked
 
-3. Copy dynamodb.tf from this directory across to your backend_support folder.
+3. Copy `dynamodb.tf` from this directory across to your backend_support folder.
 
-4. Copy your providers.tf form the root of your solution into this directory.
+4. Copy your `providers.tf` form the root of your solution into this directory.
 
-5. You will also need to create variables.tf in this directory and add variables for prefix and region with default values that make common sense.
+5. You will also need to create `variables.tf` in this directory and add variables for prefix and region with default values that make common sense.
 
 6. Follow the prerequisites to authenticate to AWS via the command line, see root level [README](../README.md).
 
@@ -66,7 +66,7 @@ terraform apply
 
 Troubleshoot any errors before proceeding, it is also worth logging into the AWS Console to have a look at your S3 bucket and DynamodDB table.  Notice the Terraform state for this folder is local whereas the Terraform state for your root folder will be remote.
 
-8. Now we want to use the remote state management resources we created.  Create backend.tf in the root of your solution with the following code (update the placeholders as appropriate, also note that you can't use variables in this file, unfortunately it needs to be hard coded):
+8. Now we want to use the remote state management resources we created.  Create `backend.tf` in the root of your solution with the following code (update the placeholders as appropriate, also note that you can't use variables in this file, unfortunately it needs to be hard coded):
 
 ```
 terraform {
@@ -81,7 +81,7 @@ terraform {
 }
 ```
 
-9. Before we test out the remote state we should remove the local Terraform state files to ensure there are no conflicts.  Before doing so we should run 'terraform state list' on the command prompt at the root of your solution.  It should return nothing which highlights Terraform is not managing any resources and therefore safe to delete the local Terraform state files.  If it does list some resources then you should run 'terraform destroy -var-file="dev.tfvars"' to remove them before proceeding.  Assuming you now have no resources listed when you run 'terraform state list' you can now delete the following files in the root of your solution.
+9. Before we test out the remote state we should remove the local Terraform state files to ensure there are no conflicts.  Before doing so we should run `terraform state list` on the command prompt at the root of your solution.  It should return nothing which highlights Terraform is not managing any resources and therefore safe to delete the local Terraform state files.  If it does list some resources then you should run `terraform destroy -var-file="dev.tfvars"` to remove them before proceeding.  Assuming you now have no resources listed when you run 'terraform state list' you can now delete the following files in the root of your solution.
 
 ```
 terraform.tfstate
@@ -107,13 +107,13 @@ I have seen some engineers create the Terraform state resources using a Cloudfor
 
 We are going to add an extra resource in AWS using the AWS Console then import the resource into your Terraform code, move the resource using the Terraform move block and then finally remove the resource from your Terraform code without destroying it in AWS.
 
-1. Add a new subnet with CIDR block 192.168.1.96/28 into your VPC using the AWS Console (UI).
+1. Add a new subnet with CIDR block `192.168.1.96/28` into your VPC using the AWS Console (UI).
 
-2. Using the [import block](https://developer.hashicorp.com/terraform/language/import) try to import the resource into your solution in the network.tf file.  Once you've updated network.tf run the Terraform plan command which should recognise there is one resource to be imported.  If so then run the Terraform apply command to bring the new subnet into your Terraform state and solution.  Once you've run the apply command successfully you can safely remove the import block.
+2. Using the [import block](https://developer.hashicorp.com/terraform/language/import) try to import the resource into your solution in the `network.tf` file.  Once you've updated `network.tf` run the Terraform plan command which should recognise there is one resource to be imported.  If so then run the Terraform apply command to bring the new subnet into your Terraform state and solution.  Once you've run the apply command successfully you can safely remove the import block.
 
 3. Using the [move block](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring#moved-block-syntax) try to rename the resource in your solution with a new name.  This can be useful if you are refactoring your solution and moving resources into modules which we'll come on to later.
 
-4. Using the [Terraform rm cmd](https://developer.hashicorp.com/terraform/cli/commands/state/rm) remove the resource you imported earlier.  You should also remove the related code from network.tf otherwise your solution will try to recreate it the next time it runs.  Once removed you can run terraform state list to confirm it's no longer managed by Terraform and you can also login to the AWS Console (UI) to confirm the resource still exists.
+4. Using the [Terraform rm cmd](https://developer.hashicorp.com/terraform/cli/commands/state/rm) remove the resource you imported earlier.  You should also remove the related code from `network.tf` otherwise your solution will try to recreate it the next time it runs.  Once removed you can run terraform state list to confirm it's no longer managed by Terraform and you can also login to the AWS Console (UI) to confirm the resource still exists.
 
 5. Delete the subnet you create in step 1 manually using the AWS Console (UI).
 

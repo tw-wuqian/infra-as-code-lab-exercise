@@ -31,7 +31,7 @@ Users connect to the application through a public facing load balancer which has
 
 Please read the root level [README](../README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
 
-Hint: In the provider block, region variable or the *.tfvars file there is a value specified for the region, you should update this to match your AWS profile region.s
+Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.s
 
 ### Steps/Tasks for Goals 1
 
@@ -39,9 +39,9 @@ These steps will allow you to deploy your Terraform code using GitHub Actions.
 
 1. Again we should manually create the db secret in the AWS Console (UI) if it doesn't already exist (see [Session 5 README](../Session_5_Terraform_Modules/README.md), goal 2, step 1 for more info).
 
-2. Copy the iam-github.tf from this directory into your backend_support folder.  You'll need to add a new variable (repo_name) which is referenced in this file.  This varaible you should provide the default value of the name of your GitHub repository and include the owner (for example OWNER/REPOSITORY).  This GitHub IAM role is a new pre-requisite to enable you to use GitHub Actions with OIDC.  As we've now changed the purpose of this directory (backend_support), it's not just used for creating remote state management but also for creating the GitHub IAM role, we should rename it appropriately.  Please rename the backend_support folder to tf_prerequisites. 
+2. Copy the `iam-github.tf` from this directory into your backend_support folder.  You'll need to add a new variable (repo_name) which is referenced in this file.  This varaible you should provide the default value of the name of your GitHub repository and include the owner (for example OWNER/REPOSITORY).  This GitHub IAM role is a new pre-requisite to enable you to use GitHub Actions with OIDC.  As we've now changed the purpose of this directory (backend_support), it's not just used for creating remote state management but also for creating the GitHub IAM role, we should rename it appropriately.  Please rename the backend_support folder to tf_prerequisites. 
 
-3. Log in to AWS, go to IAM and view 'identity providers' and if there is **NOT** an entry for 'token.actions.githubusercontent.com' then uncomment the first 12 lines in iam-github.tf as this will then create the OIDC provider which can only be created once per account.  If it is already there then you can ignore this step.
+3. Log in to AWS, go to IAM and view 'identity providers' and if there is **NOT** an entry for 'token.actions.githubusercontent.com' then uncomment the first 12 lines in `iam-github.tf` as this will then create the OIDC provider which can only be created once per account.  If it is already there then you can ignore this step.
 
 4. I would like you to carefully review the permissions granted to the GitHub IAM role.  I've spent some time trying to make sure it is restricted to as close to least privilege principle.  This is done using a combination of managed policies like 'arn:aws:iam::aws:policy/AmazonECS_FullAccess' as well as explicit permissions.  Whenever you create and assign IAM permissions you should be wary around using wildcards (*) and restrict it as much as possible to limit the blast radius if a security breach was to occur.
 
@@ -67,7 +67,7 @@ exec ./api: exec format error
 
 9. We are now going to change our GitHub Action to run automatically on a commit.  In the deploy_infra.yaml file on line 3 change the string 'workflow_dispatch' to 'push' and commit your changes to see if the GitHub Action is now triggered on your commit.
 
-10. Now add extra steps in your GitHub Action (deploy_infra.yaml) to install Terraform and then run Terraform init, plan and apply steps to deploy the resources to AWS (don't forget it will need to reference dev.tfvars).  Please take into consideration the deployment may take 10+ minutes.  Don't proceed to the next step until you have a successful GitHub Action for deploying your infrastructure.
+10. Now add extra steps in your GitHub Action (deploy_infra.yaml) to install Terraform and then run Terraform init, plan and apply steps to deploy the resources to AWS (don't forget it will need to reference `dev.tfvars`).  Please take into consideration the deployment may take 10+ minutes.  Don't proceed to the next step until you have a successful GitHub Action for deploying your infrastructure.
 
 11. As per this [slide](https://docs.google.com/presentation/d/1468DXJZPzhKKLAlxz6z7zhvYlkNLOaSCHztUYbQNKAI/edit#slide=id.g2c02383fe93_0_0) in the Session 6 slide deck, you can add additional build step options for formatting, linting, security, testing and documentation.  Experiment by adding formatting, linting and one other of these as pre or post deploy steps in your GitHub Action workflow.  If they are prebuild steps then ensure the deployment doesn't run if the prebuild steps fail.  You can run these commands locally first and first any issues they highlight before commiting changes to the repo therefore failing faster.
 
@@ -85,7 +85,7 @@ curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "emai
 
 This should return a json object with an Id along with the data passed in.  This indicates that the request worked and your solution has deployed successfully.
 
-16. Once you have finished testing the solution you need to create a third GitHub Action yaml file for destroying the resources (e.g. destroy_infra.yaml which runs terraform destroy -var-file="dev.tfvars" --auto-approve).  Commit it to your repo and trigger it manually to destroy your infra resources.
+16. Once you have finished testing the solution you need to create a third GitHub Action yaml file for destroying the resources (e.g. destroy_infra.yaml which runs `terraform destroy -var-file="dev.tfvars" --auto-approve`).  Commit it to your repo and trigger it manually to destroy your infra resources.
 
 These are the last changes you will make to this repo as part of this course but now you have a useful example repo to reference.  I do recommend looking through all the folders and files in this repo and ask yourself whether you are comfortable explaining what every files does, if so then you've hopefully learnt a lot through building this working solution.
 
@@ -105,11 +105,11 @@ For this task we will create a new very simple solution to help us learn how to 
 2. Once logged into your Terraform account create an organisation.  After creating an organisation and before creating a workspace click on the 'Projects & workspaces' link in the breadcrumb links up the top of the screen.  Now click the 'New' button and create a new project giving it a name which is a string with no spaces in it.  Now click the 'New' button and select new workspace, choose a CLI-Driven workspace, give the workspace a name which is a string with no spaces in it and select the project you just created and click create.
 Please make a note of the names of the organisation, the project and the workspace.
 
-3. Locally on your laptop create a new folder for this simple project.  Inside that folder create a folder called terraform_cloud_IAM_role and copy the files from the Demo repo for the [terraform_cloud_iam_role](https://github.com/tw-infrastructure-academy/infra-as-code-demo-examples/tree/main/Session_6_Terraform_Cloud_and_Pipelines/terraform_cloud_IAM_role) into it.  Update the organisation, project and workspace variable defaults in variables.tf as applicable.  
+3. Locally on your laptop create a new folder for this simple project.  Inside that folder create a folder called terraform_cloud_IAM_role and copy the files from the Demo repo for the [terraform_cloud_iam_role](https://github.com/tw-infrastructure-academy/infra-as-code-demo-examples/tree/main/Session_6_Terraform_Cloud_and_Pipelines/terraform_cloud_IAM_role) into it.  Update the organisation, project and workspace variable defaults in `variables.tf` as applicable.  
 
-4. Log in to AWS and go to IAM and view 'identity providers' and if there is not an entry for 'app.terraform.io' then uncomment the first 12 lines in iam-terraform-cloud.tf.  Also in the same file update any permissions in the policy if you wish.  Now run the usual Terraform commands **in the terraform_cloud_iam_role folder** to create an IAM role for Terraform Cloud to authenticate with and use to create AWS resources on your behalf.
+4. Log in to AWS and go to IAM and view 'identity providers' and if there is not an entry for `app.terraform.io` then uncomment the first 12 lines in `iam-terraform-cloud.tf`.  Also in the same file update any permissions in the policy if you wish.  Now run the usual Terraform commands **in the terraform_cloud_iam_role folder** to create an IAM role for Terraform Cloud to authenticate with and use to create AWS resources on your behalf.
 
-5. Navigate out of the terraform_cloud_iam_role folder back to the root folder for this new solution.  Create a file called backend.tf and add the following as contents changing the placeholders. 
+5. Navigate out of the terraform_cloud_iam_role folder back to the root folder for this new solution.  Create a file called `backend.tf` and add the following as contents changing the placeholders. 
 
 ```
 terraform {
@@ -125,7 +125,7 @@ terraform {
 
 This file points the remote state for your solution to Terraform Cloud.
 
-6. Add file provider.tf with the following content.  
+6. Add file `provider.tf` with the following content.  
 
 ```
 terraform {
@@ -142,10 +142,10 @@ provider "aws" {
 }
 ```
 
-7. Add file s3.tf (create a basic S3 bucket using the [S3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket).
+7. Add file `s3.tf` (create a basic S3 bucket using the [S3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket).
 
 
-8. Add file variables.tf with these variables (update the region default value):
+8. Add file `variables.tf` with these variables (update the region default value):
 
 ```
 variable "region" {
@@ -168,7 +168,7 @@ variable "TFC_AWS_RUN_ROLE_ARN" {
 9. In the Terraform Cloud, navigate to your workspace and add the following workspace variables:
 
 TFC_AWS_PROVIDER_AUTH = true
-TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the name used in iam-terraform-cloud.tf for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
+TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the name used in `iam-terraform-cloud.tf` for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
 
 10. Run the following command and follow the instructions:
 
