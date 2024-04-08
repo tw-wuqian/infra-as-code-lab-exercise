@@ -63,7 +63,7 @@ After clicking next, name the secret dev/db (all other aspects of the creation w
 
 4. In your ECS module ensure you have an output for the repository_url and expose that output to your root `outputs.tf` as well.
 
-5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a suffix of 'http://' and a prefix of '/users' so the value provides a properly formatted URL.
+5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a suffix of `http://` and a prefix of `/users`\ so the value provides a properly formatted URL.
 
 6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source.  You need to associate this with your ecs task execution role using aws_iam_policy and aws_iam_role_policy_attachment Terraform resources.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
 
@@ -94,9 +94,11 @@ Pass these variables and the db_secret_arn into the container in the aws_ecs_tas
 
 9. This next step will depend on whether you are running an M1 chipset (ARM architecture) on your laptop or not.  If you are not then skip this step, if you are then add this as an attribute into ECS aws_ecs_task_definition runtime to allow for the fact you will build and push an ARM based image for consumption:
 
+```
   runtime_platform {
     cpu_architecture = "ARM64" # "ARM64" or "X86_64"
   } 
+```
 
 11. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
 
@@ -111,7 +113,7 @@ Troubleshoot any errors (it's expected there may be a few to work out) before pr
 
 10. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
 
-11. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of 'http://<load_balancer_dns_name>/users' which should return an empty array on screen.  You are now ready to test the REST API.
+11. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
 
 ```
 curl -X GET http://<load_balancer_dns_name>/users 
@@ -139,9 +141,11 @@ Here are the REST API routes:
 
 Knowing this information we can now use curl to add a new user using the REST API:
 
+```
 curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "email":"jdoe@example.com"}' -H "Content-Type: application/json"
+```
 
-This should return a json object with an Id along with the data passed in.  This indicates that the command worked.  You can now either run a curl command or access the web browser at the address http://<load_balancer_dns_name>/users to confirm the user has been added.  You should be able to test out any of the REST API routes with this application.
+This should return a json object with an Id along with the data passed in.  This indicates that the command worked.  You can now either run a curl command or access the web browser at the address `http://<load_balancer_dns_name>/users` to confirm the user has been added.  You should be able to test out any of the REST API routes with this application.
 
 13. Commit your code to your repo and name the commit 'Session 5'.
 

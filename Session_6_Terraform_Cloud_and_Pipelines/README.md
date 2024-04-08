@@ -43,7 +43,7 @@ These steps will allow you to deploy your Terraform code using GitHub Actions.
 
 3. Log in to AWS, go to IAM and view 'identity providers' and if there is **NOT** an entry for 'token.actions.githubusercontent.com' then uncomment the first 12 lines in `iam-github.tf` as this will then create the OIDC provider which can only be created once per account.  If it is already there then you can ignore this step.
 
-4. I would like you to carefully review the permissions granted to the GitHub IAM role.  I've spent some time trying to make sure it is restricted to as close to least privilege principle.  This is done using a combination of managed policies like 'arn:aws:iam::aws:policy/AmazonECS_FullAccess' as well as explicit permissions.  Whenever you create and assign IAM permissions you should be wary around using wildcards (*) and restrict it as much as possible to limit the blast radius if a security breach was to occur.
+4. I would like you to carefully review the permissions granted to the GitHub IAM role.  I've spent some time trying to make sure it is restricted to as close to least privilege principle.  This is done using a combination of managed policies like `arn:aws:iam::aws:policy/AmazonECS_FullAccess` as well as explicit permissions.  Whenever you create and assign IAM permissions you should be wary around using wildcards (*) and restrict it as much as possible to limit the blast radius if a security breach was to occur.
 
 5. Now run the usual Terraform commands **in the tf_prerequisites folder** to create an IAM role for GitHub to authenticate with and use to create AWS resources on your behalf as well as create your backend support resources for state management.  Don't proceed to the next step until the Terraform deployment is successful.
 
@@ -79,9 +79,11 @@ exec ./api: exec format error
 
 15. Assuming it is successful and your container is up and running then try and access your load balancer as you have done previously in Session 5's lab exercise (you can get the load balancer address from the output of the Terraform apply step in your GitHub Action Deploy Infra logs or via the AWS Console), e.g.
 
+```
 curl -X GET http://<load_balancer_dns_name>/users
 
 curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "email":"jdoe@example.com"}' -H "Content-Type: application/json"
+```
 
 This should return a json object with an Id along with the data passed in.  This indicates that the request worked and your solution has deployed successfully.
 
@@ -167,8 +169,8 @@ variable "TFC_AWS_RUN_ROLE_ARN" {
 
 9. In the Terraform Cloud, navigate to your workspace and add the following workspace variables:
 
-TFC_AWS_PROVIDER_AUTH = true
-TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the name used in `iam-terraform-cloud.tf` for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
+- TFC_AWS_PROVIDER_AUTH = true
+- TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the name used in `iam-terraform-cloud.tf` for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
 
 10. Run the following command and follow the instructions:
 
