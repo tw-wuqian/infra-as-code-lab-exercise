@@ -2,11 +2,14 @@
 
 ## Session 2 - Terraform Basics
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding.
+
 ### Overview
 
-You will learn how to create a fully functioning network in AWS that spans two availability zones in a single region. Creating a network that spans two availability zones will allow you to architect a solution that can become highly available (e.g. if one AZ goes down then your solution can flip over to utilise the other AZ). You should start off with the same code you have from session 1 and refactor it based on the exercises below. You will also explore some of the cost related AWS services available to you.
+You will learn how to create a fully functioning network in AWS that spans two availability zones in a single region.  Creating a network that spans two availability zones will allow you to architect a solution that can become highly available (e.g. if one AZ goes down then your solution can flip over to utilise the other AZ).  You should start off with the same code you have from session 1 and refactor it based on the exercises below.  You will also explore some of the cost related AWS services available to you.
 
-If you don't understand or need to brush up on AWS VPCs and networking before starting this lab exercise then I would recommend this [Campus course](https://campus.thoughtworks.net/learn/courses/48524/networking-administration-infra-engineer-self-serve/lessons/131363/aws-networking). This should help you understand the basics around VPCs, networking and routing.
+If you don't understand or need to brush up on AWS VPCs and networking before starting this lab exercise then I would recommend this [Campus course](https://campus.thoughtworks.net/learn/course/48524/networking-administration-infra-engineer-self-serve?generated_by=17335&hash=2960e1f09d8f0c331cac2f27170a50496b96ab62).  This should help you understand the basics around VPCs, networking and routing.
+
 
 ### Session 2 Goals
 
@@ -117,7 +120,7 @@ Troubleshoot any errors before proceeding.
 
 10. Now we will add the route tables and associate them with the subnets. We will create a public route table which will have a route to the internet (`0.0.0.0`) via the internet gateway resource. We will also create a private route table which will have a route to the internet (`0.0.0.0`) via the NAT gateway resource. We will then associate the public subnet resources with the public route table and the private subnet resources with the private route table.
 
-In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (they should only have a single route for `0.0.0.0/0`).
+In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (each route table should only have a single route for `0.0.0.0/0`).
 
 Now add 4 x [Route Table Association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) resources, associate the public subnets with the public route table and the private subnets with the private route table (this is not very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) but we will make improvements here in later sessions).
 

@@ -2,6 +2,8 @@
 
 ## Session 4 - Terraform Tips n Tricks
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 3 before proceeding.
+
 ### Overview
 
 You will learn how to implement Terraform meta-arguments and functions which help to clean up our code from a [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) perspective.  We will also implement AWS ECS Fargate with a public facing application load balancer (ALB).

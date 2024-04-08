@@ -2,6 +2,8 @@
 
 ## Session 6 - Terraform Cloud and Pipelines
 
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 5 before proceeding.
+
 ### Overview
 
 You will learn how to deploy using a CI/CD pipeline in GitHub Actions as well as learn how to deploy infrastructure using Terraform Cloud (SaaS) both using OIDC (OpenID Connect) authentication.
