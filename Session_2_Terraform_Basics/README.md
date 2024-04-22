@@ -122,7 +122,7 @@ Troubleshoot any errors before proceeding.
 
 In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (each route table should only have a single route for `0.0.0.0/0`).
 
-Now add 4 x [Route Table Association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) resources, associate the public subnets with the public route table and the private subnets with the private route table (this is not very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) but we will make improvements here in later sessions).
+Now add 4 x [Route Table Association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) resources, create an association between a route table and a subnet from the Terraform registry using the hyperlink provided, associate the public subnets with the public route table and the private subnets with the private route table (this is not very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) but we will make improvements here in later sessions).
 
 11. Test your changes by running the following commands to see if you can deploy all your resources:
 
