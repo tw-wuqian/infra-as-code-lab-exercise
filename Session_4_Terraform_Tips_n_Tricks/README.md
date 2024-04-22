@@ -133,6 +133,7 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
     - [aws_alb_listener](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener)
         - port = 80
         - protocol = "HTTP"
+        - load_balancer_arn = aws_alb.alb.arn
         - default_action = forward to the target group created in this file (`alb.tf`)
     - [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
         - call this Terraform resource 'alb_sg' (this is the name it's referenced by in `ecs.tf`)    
