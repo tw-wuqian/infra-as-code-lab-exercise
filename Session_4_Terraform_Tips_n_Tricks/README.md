@@ -107,7 +107,7 @@ Troubleshoot any errors before proceeding.
 
 We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.
 
-1. Create `ecr.tf` in the root of your solution and add an [Elastic Container Registry (ECR)](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) resource with a friendly identifying tag name that utilises var.prefix similar to the other resources you've tagged.  Name this Terraform resource 'api' (this is the name it's referenced by in `ecs.tf`) and provide the ECR a name attribute that equals "${var.prefix}-crud-app".  Also add a force_delete attribute which has a value of true to your ECR.  The ECR is used to store your container images.
+1. Create `ecr.tf` in the root of your solution and add an [Elastic Container Registry (ECR)](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) resource with a friendly identifying tag name that utilises var.prefix similar to the other resources you've tagged and also maintain image_scanning_configuration block in the aws_ecr_repository resource.  Name this Terraform resource 'api' (this is the name it's referenced by in `ecs.tf`) and provide the ECR a name attribute that equals "${var.prefix}-crud-app".  Also add a force_delete attribute which has a value of true to your ECR.  The ECR is used to store your container images.
 
 2. Copy `ecs.tf` and `iam-ecs.tf` from this directory into your root folder.  This will create an ECS cluster and assign IAM permissions to the ECS task which runs under the ECS service.  Have a look at the code in these two new files so you understand what resources are being created.  The ECS task is the container you will be running.  
 
