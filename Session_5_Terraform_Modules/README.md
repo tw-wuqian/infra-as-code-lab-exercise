@@ -63,7 +63,7 @@ After clicking next, name the secret dev/db (all other aspects of the creation w
 
 4. In your ECS module ensure you have an output for the repository_url and expose that output to your root `outputs.tf` as well.
 
-5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a suffix of `http://` and a prefix of `/users`\ so the value provides a properly formatted URL.
+5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a prefix of `http://` and a suffix of `/users`\ so the value provides a properly formatted URL.
 
 6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source.  You need to associate this with your ecs task execution role using aws_iam_policy and aws_iam_role_policy_attachment Terraform resources.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
 
