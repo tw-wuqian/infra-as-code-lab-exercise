@@ -143,7 +143,9 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
         - 1 x ingress rule attribute, protocol = tcp, from and to port is 8000, from source 'itself' (self = true).
         - 1 x egress rule attribute, protocol = -1, from and to port is 0, to destination 0.0.0.0/0 (using the cidr_blocks attribute).  This allows all outbound traffic.
         
-5. Run the following commands to test deploying your updated solution:
+5. Now that we have created a lot of resources, you can utilise [terraform graph](https://developer.hashicorp.com/terraform/cli/commands/graph) to visualise how Terraform resolves dependencies across various resources, ensuring they are created in the proper sequence.
+
+6.Run the following commands to test deploying your updated solution:
 
 ```
 terraform plan -var-file="dev.tfvars"
@@ -152,7 +154,7 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.  You should have successfully deployed an ECR and an ECS cluster with a service and a task (container) that is associated with a load balancer.  The ECS task will be in a failing state until we fix it in the next session when we deploy our container image to it.
 
-6. Commit your code to your repo and name the commit 'Session 4'.
+7. Commit your code to your repo and name the commit 'Session 4'.
 
 
 ### Steps/Tasks for Goal 3 - FinOps
