@@ -47,7 +47,7 @@ Hint: In the provider block, region variable or the `*.tfvars` file there is a v
 
 Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.
 
-1. Using the AWS Console (UI) manually create a new secret in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
+1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
 
 - Nine characters
 - Two uppercase letters
@@ -55,7 +55,7 @@ Now we are going to add an RDS instance to your AWS solution using Terraform and
 - Two numbers
 - One or more special characters (excluding '/', '@', '"', ' ')
 
-After clicking next, name the secret dev/db (all other aspects of the creation wizard can be left as the defaults).
+After clicking next, name the secret dev/db (if such a name exists already, use a uniquely identifying name preferably with your initials - dev/dbxyz for instance) (all other aspects of the creation wizard can be left as the defaults).
 
 2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created.
 
@@ -159,6 +159,8 @@ terraform destroy --auto-approve -var-file="dev.tfvars"
 cd backend_support
 terraform destroy --auto-approve
 ```
+
+We recommend that you destroy any manually created resources as well (secret in AWS Secret Manager for example)
 
 It also doesn't take long to double check by logging in to the AWS console to verify all the resources have been terminated which should give you satisfaction that no unnecessary cloud costs are accummulating.
 
