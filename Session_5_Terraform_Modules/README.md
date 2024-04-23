@@ -65,7 +65,7 @@ After clicking next, name the secret dev/db (all other aspects of the creation w
 
 5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a prefix of `http://` and a suffix of `/users`\ so the value provides a properly formatted URL.
 
-6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source.  You need to associate this with your ecs task execution role using aws_iam_policy and aws_iam_role_policy_attachment Terraform resources.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
+6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source.  You need to associate this with your ecs task execution role using [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) and [aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) Terraform resources.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
 
 7. Copy the contents of container.json in this folder over the top of container.json in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
 
@@ -100,7 +100,7 @@ Pass these variables and the db_secret_arn into the container in the aws_ecs_tas
   } 
 ```
 
-11. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
+10. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
 
 ```
 terraform init
@@ -111,15 +111,15 @@ terraform apply -var-file="dev.tfvars"
 Troubleshoot any errors (it's expected there may be a few to work out) before proceeding to the next step. 
 
 
-10. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
+11. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
 
-11. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
+12. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
 
 ```
 curl -X GET http://<load_balancer_dns_name>/users 
 ```
 
-12. First I'll provide a little more information about the solution (a simple web based REST API) we've built and how to interact with it.  Using the web browser or curl command you can hit the load balancer's address with a path (/users) and a specified method (GET, POST, PUT, etc), the load balancer then routes this request to the ECS container which then passes its request in the form of SQL statements on to a Postgres database (RDS).  The REST API is extremely basic, there's no data validation or paramatisation from a security stand point, it provides CRUD capabilities for a basic working example for user data (you can easily give it bad data or do SQL injection).  To understand what data we should send the REST API you need to know the 'user' class which is defined as follows (Id is generated by the database):
+13. First I'll provide a little more information about the solution (a simple web based REST API) we've built and how to interact with it.  Using the web browser or curl command you can hit the load balancer's address with a path (/users) and a specified method (GET, POST, PUT, etc), the load balancer then routes this request to the ECS container which then passes its request in the form of SQL statements on to a Postgres database (RDS).  The REST API is extremely basic, there's no data validation or paramatisation from a security stand point, it provides CRUD capabilities for a basic working example for user data (you can easily give it bad data or do SQL injection).  To understand what data we should send the REST API you need to know the 'user' class which is defined as follows (Id is generated by the database):
 
 ```
 type User struct {
@@ -147,7 +147,7 @@ curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "emai
 
 This should return a json object with an Id along with the data passed in.  This indicates that the command worked.  You can now either run a curl command or access the web browser at the address `http://<load_balancer_dns_name>/users` to confirm the user has been added.  You should be able to test out any of the REST API routes with this application.
 
-13. Commit your code to your repo and name the commit 'Session 5'.
+14. Commit your code to your repo and name the commit 'Session 5'.
 
 
 ### Steps/Tasks for Goal 3 - FinOps
