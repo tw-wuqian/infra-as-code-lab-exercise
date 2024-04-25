@@ -104,13 +104,13 @@ I have seen some engineers create the Terraform state resources using a Cloudfor
 
 
 ### Steps/Tasks for Goal 2
-Note: This specific goal gives you awareness of few more important Terraform commands, it has no relation with the process you are doing so far.
+Note: This specific goal gives you the awareness of few more important Terraform commands, it has no relation with the process you are doing so far.
 
 We are going to add an extra resource in AWS using the AWS Console then import the resource into your Terraform code, move the resource using the Terraform move block and then finally remove the resource from your Terraform code without destroying it in AWS.
 
 1. Add a new subnet with CIDR block `192.168.1.96/28` into your VPC using the AWS Console (UI).
 
-2. Using the [import block](https://developer.hashicorp.com/terraform/language/import) try to import the resource into your solution in the `network.tf` file.  Once you've updated `network.tf` run the Terraform plan command which should recognise there is one resource to be imported.  If so then run the Terraform apply command to bring the new subnet into your Terraform state and solution.  Once you've run the apply command successfully you can safely remove the import block.
+2. Using the [import block](https://developer.hashicorp.com/terraform/language/import) try to import the resource into your solution in the `network.tf` file. Not just the import block alone is needed pl understand the syntax from the given reference. Once you've updated `network.tf` run the Terraform plan command which should recognise there is one resource to be imported.  If so then run the Terraform apply command to bring the new subnet into your Terraform state and solution.  Once you've run the apply command successfully you can safely remove the import block.
 
 3. Using the [move block](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring#moved-block-syntax) try to rename the resource in your solution with a new name.  This can be useful if you are refactoring your solution and moving resources into modules which we'll come on to later.
 
