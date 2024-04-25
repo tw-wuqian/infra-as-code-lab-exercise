@@ -5,6 +5,8 @@
 # resources have not been cleaned up during and after a training course
 #
 # Usage: authenticate aith AWS then run this script ./query_aws_resources 
+# You can also pass in a region just to query a single region
+# For example: ./query_aws_resources us-east-2
 # You may need to add executable permissions locally to the file first 
 # For example: chomd +x ./query_aws_resources
 #
@@ -72,9 +74,16 @@ function _retrieve_more_details {
 }
 
 AWS_REGION_LIST=$(aws ec2 describe-regions | jq -r '.Regions[] | .RegionName')
-#AWS_REGION_LIST=('ap-southeast-2')
-#AWS_REGION_LIST=('us-east-2')
-#AWS_REGION_LIST=('eu-north-1')
+
+if [[ ! -z "$1" ]]; then 
+REGION_EXISTS=$(echo "${AWS_REGION_LIST}" | grep $1 | wc -w | sed 's/ //g')
+if [[ $REGION_EXISTS != 1 ]]; then 
+echo "${RED}Region '${1}' does not exist, please double check it is a AWS correct region.${NC}"
+exit 1
+fi
+AWS_REGION_LIST=($1)
+fi
+
 for REGION in $AWS_REGION_LIST
 do
 
