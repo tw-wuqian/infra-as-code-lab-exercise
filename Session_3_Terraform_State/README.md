@@ -104,6 +104,7 @@ I have seen some engineers create the Terraform state resources using a Cloudfor
 
 
 ### Steps/Tasks for Goal 2
+Note: This specific goal gives you awareness of few more important Terraform commands, it has no relation with the process you are doing so far.
 
 We are going to add an extra resource in AWS using the AWS Console then import the resource into your Terraform code, move the resource using the Terraform move block and then finally remove the resource from your Terraform code without destroying it in AWS.
 
