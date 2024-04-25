@@ -232,6 +232,8 @@ Note: Costs vary per region and will fluctuate due to AWS price changes and exch
 - [Densify](https://www.densify.com/)
 - [Flexera One](https://www.flexera.com/flexera-one)
 
+As well as using an external company to help manage your cloud costs you can also create and run your own scripts to highlight cloud usage to help provide transparency on cloud costs.  A good example of this is the file `./scripts/query_aws_resources.sh` which you can run locally.  Using the AWS CLI this script will iterate through every region and display the numbers and details of specific resources.  It uses `jq` to be able to filter and manipulate the json output received from the AWS CLI commands.
+
 We've covered quite a few principles and practices as well as tools and services which all can help towards reducing your cloud costs.  That said I still believe that it's fundamentally about cloud users following good cloud management practices.  For example without any accountability and ownership for the creation of cloud resources makes cloud management really difficult and can cause cloud costs to easily spiral out of control.  As an infrastructure engineer you can't ignore cloud costs, you should take ownership of any resources you create and try to optimse your solutions with cost in mind.
 
 
