@@ -1,4 +1,3 @@
-/*
 locals {
   gihub_oidc_already_exists = false
 }
@@ -9,7 +8,7 @@ resource "aws_iam_openid_connect_provider" "default" {
     "sts.amazonaws.com",
   ]
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]
-}*/
+}
 
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}

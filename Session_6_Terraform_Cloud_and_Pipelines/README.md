@@ -41,7 +41,7 @@ These steps will allow you to deploy your Terraform code using GitHub Actions.
 
 2. Copy the `iam-github.tf` from this directory into your backend_support folder.  You'll need to add a new variable (repo_name) which is referenced in this file.  This varaible you should provide the default value of the name of your GitHub repository and include the owner (for example OWNER/REPOSITORY).  This GitHub IAM role is a new pre-requisite to enable you to use GitHub Actions with OIDC.  As we've now changed the purpose of this directory (backend_support), it's not just used for creating remote state management but also for creating the GitHub IAM role, we should rename it appropriately.  Please rename the backend_support folder to tf_prerequisites. 
 
-3. Log in to AWS, go to IAM and view 'identity providers' and if there is **NOT** an entry for 'token.actions.githubusercontent.com' then uncomment the first 12 lines in `iam-github.tf` as this will then create the OIDC provider which can only be created once per account.  If it is already there then you can ignore this step.
+3. Log in to AWS, go to IAM and view 'identity providers' and if there is **NOT** an entry for 'token.actions.githubusercontent.com' then the code in `iam-github.tf` doesn't need to be changed, if it does exist then change the local variable on line 2 `gihub_oidc_already_exists` to `true`.  This will then create the OIDC provider which can only be created once per account.
 
 4. I would like you to carefully review the permissions granted to the GitHub IAM role.  I've spent some time trying to make sure it is restricted to as close to least privilege principle.  This is done using a combination of managed policies like `arn:aws:iam::aws:policy/AmazonECS_FullAccess` as well as explicit permissions.  Whenever you create and assign IAM permissions you should be wary around using wildcards (*) and restrict it as much as possible to limit the blast radius if a security breach was to occur.
 
@@ -109,7 +109,7 @@ Please make a note of the names of the organisation, the project and the workspa
 
 3. Locally on your laptop create a new folder for this simple project.  Inside that folder create a folder called terraform_cloud_IAM_role and copy the files from the Demo repo for the [terraform_cloud_iam_role](https://github.com/twlabs/infra-as-code-demo-examples/tree/main/Session_6_Terraform_Cloud_and_Pipelines/terraform_cloud_IAM_role) into it.  Update the organisation, project and workspace variable defaults in `variables.tf` as applicable.  
 
-4. Log in to AWS and go to IAM and view 'identity providers' and if there is not an entry for `app.terraform.io` then uncomment the first 12 lines in `iam-terraform-cloud.tf`.  Also in the same file update any permissions in the policy if you wish.  Now run the usual Terraform commands **in the terraform_cloud_iam_role folder** to create an IAM role for Terraform Cloud to authenticate with and use to create AWS resources on your behalf.
+4. Log in to AWS and go to IAM and view 'identity providers' and if there is not an entry for `app.terraform.io` then the code in `iam-terraform-cloud.tf` doesn't need to be changed, if it does exist then change the local variable on line 2 `terraform_cloud_oidc_already_exists` to `true`.  Also in the same file update any permissions in the policy if you wish.  Now run the usual Terraform commands **in the terraform_cloud_iam_role folder** to create an IAM role for Terraform Cloud to authenticate with and use to create AWS resources on your behalf.
 
 5. Navigate out of the terraform_cloud_iam_role folder back to the root folder for this new solution.  Create a file called `backend.tf` and add the following as contents changing the placeholders. 
 
@@ -124,7 +124,7 @@ terraform {
   }
 }
 ```
-
+  
 This file points the remote state for your solution to Terraform Cloud.
 
 6. Add file `provider.tf` with the following content.  
@@ -178,7 +178,7 @@ variable "TFC_AWS_RUN_ROLE_ARN" {
 terraform login
 ```
 
-11. Now run the usual Terraform commands to create an S3 bucket using Terraform Cloud.  In Terraform Cloud under your workspace you should see evidence that you've applied your terraform code to trigger a pipeline on their platform.  If you encounter any issues with authentication you can see their guide [here](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/aws-configuration) on how to set OIDC authentication with AWS up which is what we've done initially with the code in the terraform_cloud_iam_role folder.
+11. Now run the usual Terraform commands to create an S3 bucket using Terraform Cloud (init, plan, apply).  In Terraform Cloud under your workspace you should see evidence that you've applied your terraform code to trigger a pipeline on their platform.  If you encounter any issues with authentication you can see their guide [here](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/aws-configuration) on how to set OIDC authentication with AWS up which is what we've done initially with the code in the terraform_cloud_iam_role folder.
 
 12. Having successfully deployed AWS resources using Terraform cloud we now need to destroy our resources which are no longer required, see commands below:
 

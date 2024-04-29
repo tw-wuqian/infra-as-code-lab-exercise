@@ -57,7 +57,7 @@ Now we are going to add an RDS instance to your AWS solution using Terraform and
 
 After clicking next, name the secret dev/db (if such a name exists already, use a uniquely identifying name preferably with your initials - dev/dbxyz for instance) (all other aspects of the creation wizard can be left as the defaults).
 
-2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created.
+2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created (update the name value for `aws_secretsmanager_secret`).
 
 3. Add new variables in `variables.tf` in your root directory for db_username (with a value of 'postgres') and db_name (also with a value of 'postgres').  Ensure the values are provided through your tfvars file.
 
