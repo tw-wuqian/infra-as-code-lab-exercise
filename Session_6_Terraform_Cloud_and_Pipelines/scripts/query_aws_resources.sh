@@ -60,9 +60,19 @@ function _retrieve_more_details {
             DETAILS=$(aws secretsmanager list-secrets --region ${4} | jq '.SecretList[] | "\("Name: " + .Name + ",") \("CreateTime: " + .CreatedDate + "!!")"') 
         elif [[ $3 == "ECR" ]]; then
             DETAILS=$(aws ecr describe-repositories --region ${4} | jq '.repositories[] | "\("Name: " + .repositoryName + ",") \("CreateTime: " + .createdAt + "!!")"')                                   
+        elif [[ $3 == "ECSTD" ]]; then
+            DETAILS=$(aws ecs list-task-definitions --region ${4} | jq '.taskDefinitionArns[] | ("Task Definition: " + . + "!!")')            
+        elif [[ $3 == "IAM_ROLES" ]]; then
+            DETAILS=$(aws iam list-roles --query "Roles[*].RoleName" | jq  '.[] | select(all(.; contains("AWS") | not)) | select(all(.; contains("OrganizationAccountAccessRole") | not))')
+        elif [[ $3 == "IAM_POLICIES" ]]; then
+            DETAILS=$(aws iam list-policies --query "Policies[*].PolicyName" --scope Local | jq '.[] | "\( . + "!!")"')                        
         fi
 
-        DETAILS=$(echo $DETAILS | sed 's/!!/\n\t\t/g' | sed 's/"//g' | tail -r | tail -n +2 | tail -r)
+        
+
+        if [[ $3 != "IAM_ROLES" ]]; then
+            DETAILS=$(echo $DETAILS | sed 's/!!/\n\t\t/g' | sed 's/"//g' | tail -r | tail -n +2 | tail -r)
+        fi
         if [[ $2 == "RED" ]]; then    
             echo "\t\t ${RED}${DETAILS}${NC}"
         else
@@ -116,6 +126,13 @@ do
     ECR=$(aws ecr describe-repositories --region ${REGION} | jq '.repositories | length')     
     _resource_check "Elastic Container Repositories" $ECR "YELLOW"
     _retrieve_more_details $ECR "YELLOW" "ECR" ${REGION}
+
+
+    ### ECS Task Definitions
+
+    ECSTD=$(aws ecs list-task-definitions --region ${REGION} | jq '.taskDefinitionArns | length')     
+    _resource_check "ECS Task Definitions" $ECSTD "YELLOW"
+    _retrieve_more_details $ECSTD "YELLOW" "ECSTD" ${REGION}
 
 
     ### NAT Gateways
@@ -177,10 +194,30 @@ do
 
 done
 
+# S3 Buckets
+
 echo "\n\n"
 S3=$(aws s3api list-buckets | jq '.Buckets | length' )
 _resource_check "S3" $S3 "YELLOW"
 _retrieve_more_details $S3 "YELLOW" "S3" ${REGION}
+
+
+# IAM Policies
+
+echo "\n"
+IAM_POLICIES=$(aws iam list-policies --query "Policies[*].PolicyName" --scope Local | jq '. | length')
+_resource_check "IAM Policies" $IAM_POLICIES "YELLOW"
+_retrieve_more_details $IAM_POLICIES "YELLOW" "IAM_POLICIES" ${REGION}
+
+# IAM Roles
+
+echo "\n"
+IAM_ROLES=$(aws iam list-roles --query "Roles[*].RoleName" | jq  '.[] | select(all(.; contains("AWS") | not)) | select(all(.; contains("OrganizationAccountAccessRole") | not))' | wc -l | sed 's/ //g')
+_resource_check "IAM Roles" $IAM_ROLES "YELLOW"
+_retrieve_more_details $IAM_ROLES "YELLOW" "IAM_ROLES" ${REGION}
+
+
+
 
 
 echo "\n${GREEN}Helpful hint:${NC} If resource IDs and tags aren't helpful to identify who created the resources, you can use CloudTrail and search on the 'Resource Name' with the value of the resource Id which may help to identify who created the resources."
