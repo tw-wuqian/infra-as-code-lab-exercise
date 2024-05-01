@@ -66,9 +66,12 @@ function _retrieve_more_details {
             DETAILS=$(aws iam list-roles --query "Roles[*].RoleName" | jq  '.[] | select(all(.; contains("AWS") | not)) | select(all(.; contains("OrganizationAccountAccessRole") | not))')
         elif [[ $3 == "IAM_POLICIES" ]]; then
             DETAILS=$(aws iam list-policies --query "Policies[*].PolicyName" --scope Local | jq '.[] | "\( . + "!!")"')                        
+        elif [[ $3 == "LAMBDA" ]]; then
+            DETAILS=$(aws lambda list-functions --region ${4} | jq '.Functions[] | "\("Name: " + .FunctionName + ",") \("Last Modified: " + .LastModified + "!!")"')            
+        elif [[ $3 == "API_GATEWAYS" ]]; then
+            DETAILS=$(aws apigateway get-rest-apis --region ${4} | jq '.items[] | "\("Name: " + .name + ",") \("CreateTime: " + .createdDate + "!!")"')            
         fi
 
-        
 
         if [[ $3 != "IAM_ROLES" ]]; then
             DETAILS=$(echo $DETAILS | sed 's/!!/\n\t\t/g' | sed 's/"//g' | tail -r | tail -n +2 | tail -r)
@@ -148,7 +151,7 @@ do
     _resource_check "VPCs" $VPCS "YELLOW"
     _retrieve_more_details $VPCS "YELLOW" "VPC" ${REGION}
 
-
+    
     ### DynamoDB
 
     DYNAMO_DB=$(aws dynamodb list-tables --region ${REGION} | jq '.TableNames | length')
@@ -159,7 +162,7 @@ do
     ### ALBs
 
     ALBS=$(aws elbv2 describe-load-balancers --region ${REGION} | jq '.LoadBalancers | length')     
-    _resource_check "Load balancers" $ALBS "YELLOW"
+    _resource_check "Load Balancers" $ALBS "YELLOW"
     _retrieve_more_details $ALBS "YELLOW" "ALB" ${REGION}
 
 
@@ -175,6 +178,20 @@ do
     EIPS=$(aws ec2 describe-addresses --region ${REGION} | jq '.Addresses | length')     
     _resource_check "Elastic IPs" $EIPS "YELLOW"
     _retrieve_more_details $EIPS "YELLOW" "EIPS" ${REGION}
+
+
+    ### Lambda
+
+    LAMBDA=$(aws lambda list-functions --region ${REGION} | jq '.Functions | length')     
+    _resource_check "Lambda Functions" $LAMBDA "YELLOW"
+    _retrieve_more_details $LAMBDA "YELLOW" "LAMBDA" ${REGION}
+
+
+    ### API Gateways
+
+    API_GATEWAYS=$(aws apigateway get-rest-apis --region ${REGION} | jq '.items | length')     
+    _resource_check "API Gateways" $API_GATEWAYS "YELLOW"
+    _retrieve_more_details $API_GATEWAYS "YELLOW" "API_GATEWAYS" ${REGION}
 
 
     ### Secrets
@@ -194,6 +211,7 @@ do
 
 done
 
+
 # S3 Buckets
 
 echo "\n\n"
@@ -209,15 +227,13 @@ IAM_POLICIES=$(aws iam list-policies --query "Policies[*].PolicyName" --scope Lo
 _resource_check "IAM Policies" $IAM_POLICIES "YELLOW"
 _retrieve_more_details $IAM_POLICIES "YELLOW" "IAM_POLICIES" ${REGION}
 
+
 # IAM Roles
 
 echo "\n"
 IAM_ROLES=$(aws iam list-roles --query "Roles[*].RoleName" | jq  '.[] | select(all(.; contains("AWS") | not)) | select(all(.; contains("OrganizationAccountAccessRole") | not))' | wc -l | sed 's/ //g')
 _resource_check "IAM Roles" $IAM_ROLES "YELLOW"
 _retrieve_more_details $IAM_ROLES "YELLOW" "IAM_ROLES" ${REGION}
-
-
-
 
 
 echo "\n${GREEN}Helpful hint:${NC} If resource IDs and tags aren't helpful to identify who created the resources, you can use CloudTrail and search on the 'Resource Name' with the value of the resource Id which may help to identify who created the resources."
