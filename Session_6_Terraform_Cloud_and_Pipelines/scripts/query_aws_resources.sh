@@ -237,4 +237,4 @@ _retrieve_more_details $IAM_ROLES "YELLOW" "IAM_ROLES" ${REGION}
 
 
 echo "\n${GREEN}Helpful hint:${NC} If resource IDs and tags aren't helpful to identify who created the resources, you can use CloudTrail and search on the 'Resource Name' with the value of the resource Id which may help to identify who created the resources."
-echo "${GREEN}Expectations:${NC} In theory, assuming no other training courses are using this AWS account, all resources should be at 0.\n"
+echo "${GREEN}Expectations:${NC} In theory, assuming no other training courses are using this AWS account, all resources should be at 0 (maybe the odd AWS Config S3 bucket might need to remain).\n"
