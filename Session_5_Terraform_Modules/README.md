@@ -74,7 +74,7 @@ output "s3_bucket_arn" {
 
 As you can see, it's fairly open to you on how you design your modules and what you expose as inputs and outputs.  We have provided some module best practices in the [slides](https://docs.google.com/presentation/d/1PApoyWIDqqxvuqqCg1rlotXlLHCMdzzgONOQ86x3Egg/edit#slide=id.g2bfb7c2b2a9_0_111) that are worth following.
 
-In the following steps we are hoping you are now ready to refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+In the following steps we are hoping you are now ready to refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Refactor the backend_support to use the public [S3 bucket module](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket).  Try to ensure that all the original configuration is maintained with the refactor so nothing should change as far as configuration (however it's worth noting that the S3 module does not support a lifecycle attribute).  You will need to rerun 'terraform init' again in the backend_support directory because it's a module change within your project.  Then you can run terraform plan and apply to confirm it all works before progressing to the next step.
 
@@ -87,7 +87,7 @@ In the following steps we are hoping you are now ready to refactor the code to u
 
 ### Steps/Tasks for Goal 2 [Difficulty Rating: 9 (complex)]
 
-Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
 

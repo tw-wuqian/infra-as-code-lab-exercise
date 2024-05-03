@@ -40,7 +40,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goals 1 and 2 [Difficulty Rating: 4 (medium)]
 
-We will now run through the following steps to refactor your code to become easier to maintain as well as add a fully functioning network in AWS.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+We will now run through the following steps to refactor your code to become easier to maintain as well as add a fully functioning network in AWS.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Create a `variables.tf` file and add the following input variables in there, each having their own description. For examples of input variables see the [Terraform documentation](https://developer.hashicorp.com/terraform/language/values/variables).
    - prefix (type = string)

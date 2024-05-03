@@ -41,7 +41,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goals 1 [Difficulty Rating: 8 (complex)]
 
-These steps will allow you to deploy your Terraform code using GitHub Actions.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+These steps will allow you to deploy your Terraform code using GitHub Actions.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Again we should manually create the db secret in the AWS Console (UI) if it doesn't already exist (see [Session 5 README](../Session_5_Terraform_Modules/README.md), goal 2, step 1 for more info).
 

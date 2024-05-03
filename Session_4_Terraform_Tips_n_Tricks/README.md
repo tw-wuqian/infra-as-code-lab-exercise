@@ -41,7 +41,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goal 1 [Difficulty Rating: 6 (tricky)]
 
-We are refactoring to include the usage of meta-aguments and functions as well as adding default tags.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+We are refactoring to include the usage of meta-aguments and functions as well as adding default tags.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. The file `networking.tf` doesn't currently follow the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.  You can see multiple resources repeated like subnets.  Refactor the subnets so you don't have 6 Terraform subnet resources, you may have 3 (public, private and secure) or perhaps less (you may need to use count, for or for_each loops).  I would like you to use the [cidrsubnet](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet) function as part of the refactoring exercise.  Therefore this will impact your variables and entries in tfvars as you no longer need to provide variables for every single subnet CIDR block as it can be calculated using this function.  Below I've shown the output of using Terraform console to test the cidrsubnet function with your VPC CIDR block without running any code, this should help with your refactoring.  Feel free to test out using Terraform Console yourself.
 
@@ -112,7 +112,7 @@ Troubleshoot any errors before proceeding.
 
 ### Steps/Tasks for Goal 2 [Difficulty Rating: 6 (tricky)]
 
-We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Create `ecr.tf` in the root of your solution and add an [Elastic Container Registry (ECR)](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) resource with a friendly identifying tag name that utilises var.prefix similar to the other resources you've tagged and also maintain image_scanning_configuration block in the aws_ecr_repository resource.  Name this Terraform resource 'api' (this is the name it's referenced by in `ecs.tf`) and provide the ECR a name attribute that equals "${var.prefix}-crud-app".  Also add a force_delete attribute which has a value of true to your ECR.  The ECR is used to store your container images.
 

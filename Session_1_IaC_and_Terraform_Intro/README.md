@@ -35,7 +35,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goals 1 and 2 [Difficulty Rating: 2 (easy)]
 
-1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.  We recommend making small commits to this repo at logicial moments througout the session.
+1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.  We recommend making small commits to this repo at logicial moments throughout the session.  We also recommend committing your changes directly to the main branch throughout the labs, there should not be any need to create any branches.
 
 2. Create a main.tf at the root of the repo and add a [VPC](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) resource with the following attributes:
 

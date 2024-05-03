@@ -41,7 +41,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goal 1 [Difficulty Rating: 4 (medium)]
 
-We are creating an independent folder inside your project that has Terraform files to create the resources necessary for remote state management.  We will run Terraform in this folder to create these resources before running Terraform in the root folder of your project to create the resources for your solution.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+We are creating an independent folder inside your project that has Terraform files to create the resources necessary for remote state management.  We will run Terraform in this folder to create these resources before running Terraform in the root folder of your project to create the resources for your solution.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Create a backend_support folder at the root of your solution, this will store the code for the resources necessary for remote state management.
 
