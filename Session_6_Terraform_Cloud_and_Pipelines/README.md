@@ -100,7 +100,7 @@ terraform destroy --auto-approve
 
 ### Steps/Tasks for Goals 2 (Optional)
 
-For this task we will create a new very simple solution to help us learn how to deploy terraform code using Terraform Cloud using OIDC for authentication.
+We have made this task optional as it provides a simple example of how to work with Terraform Cloud.  For this task we will create a new very basic solution to help us learn how to deploy terraform code using Terraform Cloud using OIDC for authentication.
 
 1. Sign up to a free account [here](https://app.terraform.io/public/signup/account) using your TW email address.
 
