@@ -28,7 +28,12 @@ Please read the root level [README](../README.md) for instructions that are the 
 
 Hint: In the provider block, region variable or the \*.tfvars file there is a value specified for the region, you should update this to match your AWS profile region.
 
-### Steps/Tasks for Goals 1 and 2
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.  As you progress through the sessions overall these lab exercises will increase in difficulty.
+
+
+### Steps/Tasks for Goals 1 and 2 [Difficulty Rating: 2 (easy)]
 
 1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.  We recommend making small commits to this repo at logicial moments througout the session.
 
@@ -85,7 +90,7 @@ terraform destroy
 
 9. We recommend committing your code to your repo if you haven't done so already.
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 FinOps is all about cloud cost management and optimisation. Nearly everything in the cloud costs money often on an hourly basis. It may not come out of your personal finances but either TW or a client has to pay for the cloud usage. Many of us have worked with many clients and cloud cost management is always underestimated and often it is easy to let cloud costs get out of control, it does require constant management. Ideally it should be a shared responsibility model (making everyone accountable) with regards to cost management in the cloud. You as a new or experienced infrastucture engineer should take responsibility of any cloud resources you come across whether you created them or not, you should ask questions and query whether cost optimisation measures have been applied. There's a few easy rules to follow like if "it's not in use turn it off" and "if it is not going to be used ever again then archive or delete it" (this is with regards to cloud resources, obviously please check with all the necessary stakeholders before taking these actions).
 
@@ -110,6 +115,6 @@ Note: Costs vary per region and will fluctuate due to AWS price changes and exch
 
 3. I would like to recommend reading this [article](https://www.ibm.com/topics/finops) which goes into greater details about what FinOps is and its core principles.
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback. Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.

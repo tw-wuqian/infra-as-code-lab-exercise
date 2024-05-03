@@ -33,7 +33,12 @@ Please read the root level [README](../README.md) for instructions that are the 
 
 Hint: In the provider block, region variable or the `\*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
-### Steps/Tasks for Goals 1 and 2
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.
+
+
+### Steps/Tasks for Goals 1 and 2 [Difficulty Rating: 4 (medium)]
 
 We will now run through the following steps to refactor your code to become easier to maintain as well as add a fully functioning network in AWS.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -149,7 +154,7 @@ Troubelshoot any errors and have a look in the AWS Console to ensure your VPC an
 
 14. Commit your working code to your repo.
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them. TW can only fund this IaC course if cloud costs continue to be low therefore we need your help. Please ensure you have run the following to destroy your cloud resources.
 
@@ -188,6 +193,6 @@ If you wished to look at the raw billing data you can access the S3 bucket which
 
 With this set up receiving a bill for each account is not efficient. This is why AWS provide [Consolidated Billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html). You can create a root/management account that associates all the other AWS accounts as child accounts in part of an AWS Organisation. Cloud costs for all accounts will be included into a single bill making it easier to manage. In the next session we will look at other advantages of AWS Organisations for cost management.
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback. Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.

@@ -34,7 +34,12 @@ Please read the root level [README](../README.md) for instructions that are the 
 Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
 
-### Steps/Tasks for Goal 1
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.
+
+
+### Steps/Tasks for Goal 1 [Difficulty Rating: 4 (medium)]
 
 We are creating an independent folder inside your project that has Terraform files to create the resources necessary for remote state management.  We will run Terraform in this folder to create these resources before running Terraform in the root folder of your project to create the resources for your solution.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -103,7 +108,7 @@ I have seen some engineers create the Terraform state resources using a Cloudfor
 9. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 2 (Optional)
+### Steps/Tasks for Goal 2 (Optional) [Difficulty Rating: 3 (easy)]
 
 This specific goal gives you the awareness of a few more important Terraform commands (Terraform import, move and remove).  It is optional because it will not impact the creation and functionality of the final solution.
 
@@ -120,7 +125,7 @@ We are going to add an extra resource in AWS using the AWS Console then import t
 5. Delete the subnet you create in step 1 manually using the AWS Console (UI).
 
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them.  TW can only fund this IaC course if cloud costs continue to be low therefore we need your help.  Please ensure you have run the following to destroy your cloud resources.
 
@@ -276,6 +281,6 @@ This is an example of how to enforce cost limiting controls across specific AWS 
 For more examples on Service Control Policies (SCPs) have a look [here](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html).
 
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback.  Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.

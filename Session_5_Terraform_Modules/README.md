@@ -34,7 +34,12 @@ Please read the root level [README](../README.md) for instructions that are the 
 Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
 
-### Steps/Tasks for Goal 1
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.
+
+
+### Steps/Tasks for Goal 1 [Difficulty Rating: 8 (complex)]
 
 In the following steps we will refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -47,7 +52,7 @@ In the following steps we will refactor the code to use both public and private 
 4. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 2
+### Steps/Tasks for Goal 2 [Difficulty Rating: 9 (complex)]
 
 Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -154,7 +159,7 @@ This should return a json object with an Id along with the data passed in.  This
 14. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them.  TW can only fund this IaC course if cloud costs continue to be low therefore we need your help.  Please ensure you have run the following to destroy your cloud resources.
 
@@ -219,6 +224,6 @@ If you choose an EC2 reservation for an instance type (e.g. t3.large) for 3 year
 One aspect with choosing the right reservation is to rightsize your instance type as you want to ensure optimum utilisation for its cost.  You can use [AWS Cost Optimiser](https://aws.amazon.com/compute-optimizer/) to help with the identifying the correct instance types for the workloads which could also help to reduce costs.
 
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback.  Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.

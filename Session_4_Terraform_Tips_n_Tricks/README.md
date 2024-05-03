@@ -34,7 +34,12 @@ Please read the root level [README](../README.md) for instructions that are the 
 Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
 
-### Steps/Tasks for Goal 1
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.
+
+
+### Steps/Tasks for Goal 1 [Difficulty Rating: 6 (tricky)]
 
 We are refactoring to include the usage of meta-aguments and functions as well as adding default tags.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -105,7 +110,7 @@ Troubleshoot any errors before proceeding.
 5. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 2
+### Steps/Tasks for Goal 2 [Difficulty Rating: 6 (tricky)]
 
 We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -159,7 +164,7 @@ Troubleshoot any errors before proceeding.  You should have successfully deploye
 7. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them.  TW can only fund this IaC course if cloud costs continue to be low therefore we need your help.  Please ensure you have run the following to destroy your cloud resources.
 
@@ -228,6 +233,6 @@ All these examples are how you may choose to utilise tags to help manage the clo
 For more information on AWS tagging best practices visit [here](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html).
 
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback.  Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.

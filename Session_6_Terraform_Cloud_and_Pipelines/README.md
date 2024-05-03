@@ -31,9 +31,15 @@ Users connect to the application through a public facing load balancer which has
 
 Please read the root level [README](../README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
 
-Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.s
+Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
-### Steps/Tasks for Goals 1
+
+### Difficulty Ratings
+
+We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.
+
+
+### Steps/Tasks for Goals 1 [Difficulty Rating: 8 (complex)]
 
 These steps will allow you to deploy your Terraform code using GitHub Actions.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
@@ -98,7 +104,7 @@ cd tf_prerequisites
 terraform destroy --auto-approve
 ```
 
-### Steps/Tasks for Goals 2 (Optional)
+### Steps/Tasks for Goals 2 (Optional) [Difficulty Rating: 6 (tricky)]
 
 We have made this task optional as it provides a simple example of how to work with Terraform Cloud.  For this task we will create a new very basic solution to help us learn how to deploy terraform code using Terraform Cloud using OIDC for authentication.
 
@@ -189,7 +195,7 @@ terraform destroy --auto-approve
 ```
 
 
-### Steps/Tasks for Goal 3 - FinOps
+### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them.  TW can only fund this IaC course if cloud costs continue to be low therefore we need your help.  Please ensure you have completed the steps 16 and 17 in Goal 1 above to destroy your cloud resources.  If you were unable to destroy them using GitHub Actions you can run the following commands locally in the root of your repo that you've been using for all your session labs to destroy the AWS resources.
 
@@ -237,6 +243,6 @@ As well as using an external company to help manage your cloud costs you can als
 We've covered quite a few principles and practices as well as tools and services which all can help towards reducing your cloud costs.  That said I still believe that it's fundamentally about cloud users following good cloud management practices.  For example without any accountability and ownership for the creation of cloud resources makes cloud management really difficult and can cause cloud costs to easily spiral out of control.  As an infrastructure engineer you can't ignore cloud costs, you should take ownership of any resources you create and try to optimse your solutions with cost in mind.
 
 
-### Steps/Tasks for Goal 4 - Session Feedback
+### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback.  Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.
