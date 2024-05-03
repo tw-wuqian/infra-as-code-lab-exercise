@@ -41,7 +41,40 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goal 1 [Difficulty Rating: 8 (complex)]
 
-In the following steps we will refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+In the following steps we will refactor the code to use both public and private modules.
+
+Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too giving you clear structure to follow.  As we move to start using modules we have more freedom of choice with less structure and defiintion especially when you you write your own private modules.  With public modules, they are similar to resource blocks as they have defined inputs and outputs.  With private modules you can choose what resources are in modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out writing modules this can be a little daunting as there isn't much guidance.  
+
+I'll provide a basic example to explain this in more depth.  Let's assume we are writing a private module for an S3 bucket, we might simply express it like this.
+
+```
+module "s3_private_module" {
+  source  = "./modules/s3"
+  name    = var.bucket_name
+```
+
+We could expose more variables to provide more flexibility for the usage.
+
+```
+module "s3_private_module" {
+  source  = "./modules/s3"
+  name = var.bucket_name
+  force_destroy = var.s3_bucket_force_destroy
+  tags = var.tags
+```
+
+We could also add an outputs.tf inside the module to be able to retrieve data from the module so you can use it outside the module as their may be dependencies on it.
+
+```
+output "s3_bucket_arn" {
+  description = "S3 Bucket ARN"
+  value       = aws_s3_bucket.my_s3_bucket.arn
+}
+```
+
+As you can see, it's fairly open to you on how you design your modules and what you expose as inputs and outputs.  We have provided some module best practices in the [slides](https://docs.google.com/presentation/d/1PApoyWIDqqxvuqqCg1rlotXlLHCMdzzgONOQ86x3Egg/edit#slide=id.g2bfb7c2b2a9_0_111) that are worth following.
+
+In the following steps we are hoping you are now ready to refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. Refactor the backend_support to use the public [S3 bucket module](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket).  Try to ensure that all the original configuration is maintained with the refactor so nothing should change as far as configuration (however it's worth noting that the S3 module does not support a lifecycle attribute).  You will need to rerun 'terraform init' again in the backend_support directory because it's a module change within your project.  Then you can run terraform plan and apply to confirm it all works before progressing to the next step.
 
