@@ -36,7 +36,7 @@ Hint: In the provider block, region variable or the `*.tfvars` file there is a v
 
 ### Steps/Tasks for Goal 1
 
-We are refactoring to include the usage of meta-aguments and functions as well as adding default tags.
+We are refactoring to include the usage of meta-aguments and functions as well as adding default tags.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. The file `networking.tf` doesn't currently follow the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.  You can see multiple resources repeated like subnets.  Refactor the subnets so you don't have 6 Terraform subnet resources, you may have 3 (public, private and secure) or perhaps less (you may need to use count, for or for_each loops).  I would like you to use the [cidrsubnet](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet) function as part of the refactoring exercise.  Therefore this will impact your variables and entries in tfvars as you no longer need to provide variables for every single subnet CIDR block as it can be calculated using this function.  Below I've shown the output of using Terraform console to test the cidrsubnet function with your VPC CIDR block without running any code, this should help with your refactoring.  Feel free to test out using Terraform Console yourself.
 
@@ -102,10 +102,12 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding. 
 
+5. Commit your working code to your repo.
+
 
 ### Steps/Tasks for Goal 2
 
-We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.
+We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. Create `ecr.tf` in the root of your solution and add an [Elastic Container Registry (ECR)](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) resource with a friendly identifying tag name that utilises var.prefix similar to the other resources you've tagged and also maintain image_scanning_configuration block in the aws_ecr_repository resource.  Name this Terraform resource 'api' (this is the name it's referenced by in `ecs.tf`) and provide the ECR a name attribute that equals "${var.prefix}-crud-app".  Also add a force_delete attribute which has a value of true to your ECR.  The ECR is used to store your container images.
 
@@ -154,7 +156,7 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.  You should have successfully deployed an ECR and an ECS cluster with a service and a task (container) that is associated with a load balancer.  The ECS task will be in a failing state until we fix it in the next session when we deploy our container image to it.
 
-7. Commit your code to your repo and name the commit 'Session 4'.
+7. Commit your working code to your repo.
 
 
 ### Steps/Tasks for Goal 3 - FinOps

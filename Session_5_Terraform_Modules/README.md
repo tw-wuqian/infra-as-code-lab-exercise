@@ -36,16 +36,20 @@ Hint: In the provider block, region variable or the `*.tfvars` file there is a v
 
 ### Steps/Tasks for Goal 1
 
+In the following steps we will refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+
 1. Refactor the backend_support to use the public [S3 bucket module](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket).  Try to ensure that all the original configuration is maintained with the refactor so nothing should change as far as configuration (however it's worth noting that the S3 module does not support a lifecycle attribute).  You will need to rerun 'terraform init' again in the backend_support directory because it's a module change within your project.  Then you can run terraform plan and apply to confirm it all works before progressing to the next step.
 
 2. Refactor `network.tf` to use the public [VPC module](https://github.com/terraform-aws-modules/terraform-aws-vpc).  Then run terraform init and apply the changes in your root directory to confirm it all works before progressing to the next step.  It's important to point out an extra attribute 'single_nat_gateway' worth using otherwise by default you will create two NAT Gateways, one for each public subnet when in our case we just wish to create a single NAT Gateway in one of the public subnets.  There are also files which reference the VPC Id, public subnet and private subnet Ids, these will now have to reference the module's outputs for these values.
 
 3. I strongly recommend before the next refactor to run the Terraform destroy command in your root directory to remove all our AWS resources (you don't have to destroy the remote state management resources as well) because it will be easier to refactor without getting conflicts with existing resources.  Now we should create a modules folder in the root directory.  We should also create a folder called ecs inside the modules folder, this will be the location for a new private module.  Move the ecs related files (`ecs.tf`, `ecr.tf` and `iam-ecs.tf`) into the ecs folder and create a new `ecs.tf` file at your root directory.  This new `ecs.tf` file should reference your new private module.  You need to work out what variables need to be passed in as well as outputs need to be passed out of this module for Terraform to work successfully (therefore the module will require a `variables.tf` and an `outputs.tf`).  Just like before rerun run the terraform init and apply in your root directory to confirm it all works before progressing to the next step.
 
+4. Commit your working code to your repo.
+
 
 ### Steps/Tasks for Goal 2
 
-Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.
+Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
 
@@ -147,7 +151,7 @@ curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "emai
 
 This should return a json object with an Id along with the data passed in.  This indicates that the command worked.  You can now either run a curl command or access the web browser at the address `http://<load_balancer_dns_name>/users` to confirm the user has been added.  You should be able to test out any of the REST API routes with this application.
 
-14. Commit your code to your repo and name the commit 'Session 5'.
+14. Commit your working code to your repo.
 
 
 ### Steps/Tasks for Goal 3 - FinOps

@@ -35,6 +35,8 @@ Hint: In the provider block, region variable or the `\*.tfvars` file there is a 
 
 ### Steps/Tasks for Goals 1 and 2
 
+We will now run through the following steps to refactor your code to become easier to maintain as well as add a fully functioning network in AWS.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
+
 1. Create a `variables.tf` file and add the following input variables in there, each having their own description. For examples of input variables see the [Terraform documentation](https://developer.hashicorp.com/terraform/language/values/variables).
    - prefix (type = string)
    - region (type = string)
@@ -145,7 +147,7 @@ terraform apply -var-file="dev.tfvars"
 
 Troubelshoot any errors and have a look in the AWS Console to ensure your VPC and networking resoures look ok, correct tags, routes, associations, etc.
 
-14. Commit your code to your repo and name the commit 'Session 2'.
+14. Commit your working code to your repo.
 
 ### Steps/Tasks for Goal 3 - FinOps
 

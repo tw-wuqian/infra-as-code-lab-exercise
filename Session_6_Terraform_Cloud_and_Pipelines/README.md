@@ -35,7 +35,7 @@ Hint: In the provider block, region variable or the `*.tfvars` file there is a v
 
 ### Steps/Tasks for Goals 1
 
-These steps will allow you to deploy your Terraform code using GitHub Actions.
+These steps will allow you to deploy your Terraform code using GitHub Actions.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. Again we should manually create the db secret in the AWS Console (UI) if it doesn't already exist (see [Session 5 README](../Session_5_Terraform_Modules/README.md), goal 2, step 1 for more info).
 
@@ -98,7 +98,7 @@ cd tf_prerequisites
 terraform destroy --auto-approve
 ```
 
-### Steps/Tasks for Goals 2
+### Steps/Tasks for Goals 2 (Optional)
 
 For this task we will create a new very simple solution to help us learn how to deploy terraform code using Terraform Cloud using OIDC for authentication.
 

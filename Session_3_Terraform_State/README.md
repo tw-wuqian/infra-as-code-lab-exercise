@@ -36,7 +36,7 @@ Hint: In the provider block, region variable or the `*.tfvars` file there is a v
 
 ### Steps/Tasks for Goal 1
 
-We are creating an independent folder inside your project that has Terraform files to create the resources necessary for remote state management.  We will run Terraform in this folder to create these resources before running Terraform in the root folder of your project to create the resources for your solution.
+We are creating an independent folder inside your project that has Terraform files to create the resources necessary for remote state management.  We will run Terraform in this folder to create these resources before running Terraform in the root folder of your project to create the resources for your solution.  We recommend continuing to make small commits of your changes to your repo at logicial moments througout the session.
 
 1. Create a backend_support folder at the root of your solution, this will store the code for the resources necessary for remote state management.
 
@@ -100,11 +100,12 @@ Troubleshoot any errors before proceeding.
 
 I have seen some engineers create the Terraform state resources using a Cloudformation template too.  It is down to personal preference how you choose to create and manage the Terraform remote state resources.
 
-9. Commit your code to your repo and name the commit 'Session 3'.
+9. Commit your working code to your repo.
 
 
-### Steps/Tasks for Goal 2
-Note: This specific goal gives you the awareness of few more important Terraform commands, it has no relation with the process you are doing so far.
+### Steps/Tasks for Goal 2 (Optional)
+
+This specific goal gives you the awareness of a few more important Terraform commands (Terraform import, move and remove).  It is optional because it will not impact the creation and functionality of the final solution.
 
 We are going to add an extra resource in AWS using the AWS Console then import the resource into your Terraform code, move the resource using the Terraform move block and then finally remove the resource from your Terraform code without destroying it in AWS.
 

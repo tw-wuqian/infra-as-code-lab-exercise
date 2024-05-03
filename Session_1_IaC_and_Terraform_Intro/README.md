@@ -30,7 +30,7 @@ Hint: In the provider block, region variable or the \*.tfvars file there is a va
 
 ### Steps/Tasks for Goals 1 and 2
 
-1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.
+1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.  We recommend making small commits to this repo at logicial moments througout the session.
 
 2. Create a main.tf at the root of the repo and add a [VPC](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) resource with the following attributes:
 
@@ -83,7 +83,7 @@ terraform destroy
 *.terraform*
 ```
 
-9. Commit your code to your repo and name the commit 'Session 1'.
+9. We recommend committing your code to your repo if you haven't done so already.
 
 ### Steps/Tasks for Goal 3 - FinOps
 
