@@ -120,7 +120,7 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
 
 3. Create a directory templates at the root of your solution and copy container.json into it.  This is your container definition.  You should be able to see that this template file has placeholders for variables that will be passed in via the Terraform ECS task resource.
 
-4. Create `alb.tf` with the following ALB related resources and set their attributes as specified below.  It will create one application load balancer with an associated listener and security group.  It will also create an IP based target group linked to the load balancer which is referenced by the ECS Service in `ecs.tf` (aws_alb_target_group.this.arn).
+4. Create `alb.tf` with the following ALB related resources and set their attributes as specified below.  It will create one application load balancer with an associated listener and security group.  It will also create an IP based target group linked to the load balancer which is referenced by the ECS Service in `ecs.tf` (aws_alb_target_group.this.arn). aws_alb is known as aws_lb. The functionality is identical.
     - [aws_alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb)
         - call this Terraform resource 'alb' (this is the name it's referenced by in `ecs.tf`)
         - load_balancer_type = application
