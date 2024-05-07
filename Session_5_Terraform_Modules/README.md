@@ -43,7 +43,7 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 In the following steps we will refactor the code to use both public and private modules.
 
-Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too giving you clear structure to follow.  As we move to start using modules we have more freedom of choice with less structure and defiintion especially when you you write your own private modules.  With public modules, they are similar to resource blocks as they have defined inputs and outputs.  With private modules you can choose what resources are in modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out writing modules this can be a little daunting as there isn't much guidance.  
+Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too, giving you a clear structure to follow.  As we start to use modules we will recognise we have more freedom of choice and less structure and/or definition especially when you write your own private modules.  Public modules will still have clearly defined inputs and outputs.  With private modules you can choose what resources are in your modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out creating your modules this can be a little daunting as there isn't much guidance.  
 
 I'll provide a basic example to explain this in more depth.  Let's assume we are writing a private module for an S3 bucket, we might simply express it like this.
 
@@ -53,7 +53,7 @@ module "s3_private_module" {
   name    = var.bucket_name
 ```
 
-We could expose more variables to provide more flexibility for the usage.
+Alternatively we could expose more variables to provide more flexibility for the module's usage.
 
 ```
 module "s3_private_module" {
@@ -72,22 +72,20 @@ output "s3_bucket_arn" {
 }
 ```
 
-As you can see, it's fairly open to you on how you design your modules and what you expose as inputs and outputs.  We have provided some module best practices in the [slides](https://docs.google.com/presentation/d/1PApoyWIDqqxvuqqCg1rlotXlLHCMdzzgONOQ86x3Egg/edit#slide=id.g2bfb7c2b2a9_0_111) that are worth following.
+Hopefully the example above helps to identify that it's fairly open for you to decide on you wish to design your modules and what you expose as inputs and outputs.  We have provided some module best practices in the [slides](https://docs.google.com/presentation/d/1PApoyWIDqqxvuqqCg1rlotXlLHCMdzzgONOQ86x3Egg/edit#slide=id.g2bfb7c2b2a9_0_111) that are worth following.
 
 In the following steps we are hoping you are now ready to refactor the code to use both public and private modules.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
-1. Refactor the backend_support to use the public [S3 bucket module](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket).  Try to ensure that all the original configuration is maintained with the refactor so nothing should change as far as configuration (however it's worth noting that the S3 module does not support a lifecycle attribute).  You will need to rerun 'terraform init' again in the backend_support directory because it's a module change within your project.  Then you can run terraform plan and apply to confirm it all works before progressing to the next step.
+1. Refactor `network.tf` to use the public [VPC module](https://github.com/terraform-aws-modules/terraform-aws-vpc).  Then run terraform init and apply the changes in your root directory to confirm it all works before progressing to the next step.  It's important to point out an extra attribute 'single_nat_gateway' worth using otherwise by default you will create two NAT Gateways, one for each public subnet when in our case we just wish to create a single NAT Gateway in one of the public subnets.  There are also files which reference the VPC Id, public subnet and private subnet Ids, these will now have to reference the module's outputs for these values.
 
-2. Refactor `network.tf` to use the public [VPC module](https://github.com/terraform-aws-modules/terraform-aws-vpc).  Then run terraform init and apply the changes in your root directory to confirm it all works before progressing to the next step.  It's important to point out an extra attribute 'single_nat_gateway' worth using otherwise by default you will create two NAT Gateways, one for each public subnet when in our case we just wish to create a single NAT Gateway in one of the public subnets.  There are also files which reference the VPC Id, public subnet and private subnet Ids, these will now have to reference the module's outputs for these values.
+2. I strongly recommend before the next refactor to run the Terraform destroy command in your root directory to remove all our AWS resources (you don't have to destroy the remote state management resources as well) because it will be easier to refactor without getting conflicts with existing resources.  Now we should create a modules folder in the root directory.  We should also create a folder called ecs inside the modules folder, this will be the location for a new private module.  Move the ecs related files (`ecs.tf`, `ecr.tf` and `iam-ecs.tf`) into the ecs folder and create a new `ecs.tf` file at your root directory.  This new `ecs.tf` file should reference your new private module.  You need to work out what variables need to be passed in as well as outputs need to be passed out of this module for Terraform to work successfully (therefore the module will require a `variables.tf` and an `outputs.tf`).  Just like before rerun run the terraform init and apply in your root directory to confirm it all works before progressing to the next step.
 
-3. I strongly recommend before the next refactor to run the Terraform destroy command in your root directory to remove all our AWS resources (you don't have to destroy the remote state management resources as well) because it will be easier to refactor without getting conflicts with existing resources.  Now we should create a modules folder in the root directory.  We should also create a folder called ecs inside the modules folder, this will be the location for a new private module.  Move the ecs related files (`ecs.tf`, `ecr.tf` and `iam-ecs.tf`) into the ecs folder and create a new `ecs.tf` file at your root directory.  This new `ecs.tf` file should reference your new private module.  You need to work out what variables need to be passed in as well as outputs need to be passed out of this module for Terraform to work successfully (therefore the module will require a `variables.tf` and an `outputs.tf`).  Just like before rerun run the terraform init and apply in your root directory to confirm it all works before progressing to the next step.
-
-4. Commit your working code to your repo.
+3. Commit your working code to your repo.
 
 
 ### Steps/Tasks for Goal 2 [Difficulty Rating: 9 (complex)]
 
-Now we are going to add an RDS instance to your AWS solution using Terraform and have a working website up and running.  The database requires a password, we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
+Now we are going to add an RDS instance to your AWS solution using Terraform and hopefully have a working REST API up and running.  The database requires a password and we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
 
@@ -97,9 +95,9 @@ Now we are going to add an RDS instance to your AWS solution using Terraform and
 - Two numbers
 - One or more special characters (excluding '/', '@', '"', ' ')
 
-After clicking next, name the secret dev/db (if such a name exists already, use a uniquely identifying name preferably with your initials - dev/dbxyz for instance) (all other aspects of the creation wizard can be left as the defaults).
+After clicking next, name the secret `dev/db<your-initials>` (obviously add your initials to make it a uniquely identifiable name, for example dev/dbnp) (all other aspects of the creation wizard can be left as the defaults).
 
-2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created (update the name value for `aws_secretsmanager_secret`).
+2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created (please update the name attribute value for `aws_secretsmanager_secret` to match the name of the password you created in the previous step).
 
 3. Add new variables in `variables.tf` in your root directory for db_username (with a value of 'postgres') and db_name (also with a value of 'postgres').  Ensure the values are provided through your tfvars file.
 
@@ -107,34 +105,13 @@ After clicking next, name the secret dev/db (if such a name exists already, use 
 
 5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a prefix of `http://` and a suffix of `/users`\ so the value provides a properly formatted URL.
 
-6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source.  You need to associate this with your ecs task execution role using [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) and [aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) Terraform resources.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
+6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source as well as `aws_iam_policy` and `aws_iam_role_policy_attachment` resources which associate it with your IAM role.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
 
 7. Copy the contents of container.json in this folder over the top of container.json in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
 
-8. You need to pass in extra variables to your ECS module:
+8. Copy the contents of `ecs-task-definition.tf` in this folder and replace the existing ECS task definition which should be in a Terraform file inside your ECS module.  You'll recognise that you will need to pass in extra variables to your ECS module (e.g. var.db_name, var.db_username, etc).
 
-```
-  db_address = aws_db_instance.database.address
-  db_name = var.db_name
-  db_username = var.db_username
-```
-
-Pass these variables and the db_secret_arn into the container in the aws_ecs_task_definition resource in `ecs.tf` like below (here's an example showing the extra variables which have been added):
-
-```
-  container_definitions = templatefile("./templates/container.json", {
-    application      = "example_app"
-    image_url        = aws_ecr_repository.api.repository_url
-    cloudwatch_group = aws_cloudwatch_log_group.ecs.name
-    region           = var.region
-    db_address       = var.db_address
-    db_name          = var.db_name
-    db_username      = var.db_username
-    db_password_arn  = var.db_secret_arn
-  })  
-```
-
-9. This next step will depend on whether you are running an M1 chipset (ARM architecture) on your laptop or not.  If you are not then skip this step, if you are then add this as an attribute into ECS aws_ecs_task_definition runtime to allow for the fact you will build and push an ARM based image for consumption:
+9. This next step will depend on whether you are running an M1 chipset (ARM architecture) on your laptop or not.  The ECS Task Definition resource you just copied across has an attribute for runtime_platform.  This needs to be set as ARM64 if you are running an M1 chipset and X86_64 if you are not (this is to allow for the fact you will build and push an ARM based image for consumption):
 
 ```
   runtime_platform {

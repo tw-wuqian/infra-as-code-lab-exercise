@@ -1,3 +1,13 @@
+resource "aws_iam_role_policy_attachment" "attachment_policy" {
+  policy_arn = aws_iam_policy.ecs_task_role_policy.arn
+  role       = aws_iam_role.ecs_task_execution.name
+}
+
+resource "aws_iam_policy" "ecs_task_role_policy" {
+  name   = format("%s-ecs-task-policy", var.prefix)
+  policy = data.aws_iam_policy_document.ecs_task_role_policy_document.json
+}
+
 data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "ecs_task_role_policy_document" {
