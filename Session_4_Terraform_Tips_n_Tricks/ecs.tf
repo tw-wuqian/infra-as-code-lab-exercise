@@ -34,7 +34,7 @@ resource "aws_ecs_service" "this" {
   health_check_grace_period_seconds  = 60
 
   network_configuration {
-    security_groups  = [aws_security_group.this.id]
+    security_groups  = [aws_security_group.ecs.id]
     subnets          = aws_subnet.private_subnets[*].id
     assign_public_ip = false
   }
@@ -70,7 +70,7 @@ resource "aws_ecs_task_definition" "this" {
   })
 }
 
-resource "aws_security_group" "this" {
+resource "aws_security_group" "ecs" {
   name   = format("%s-ecs-sg", var.prefix)
   vpc_id = aws_vpc.main.id
 

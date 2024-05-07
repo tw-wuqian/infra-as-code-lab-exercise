@@ -41,6 +41,8 @@ We're providing a relative scale of difficulty ratings from 1 to 10 for all the 
 
 ### Steps/Tasks for Goal 1 [Difficulty Rating: 8 (complex)]
 
+For the next two goals you may notice that in many of these steps we're helping you significantly, this is based on previous participant feedback which indicated that this sessions was complex and time consuming.  We've made it easier so you can focus on learning the concepts.
+
 In the following steps we will refactor the code to use both public and private modules.
 
 Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too, giving you a clear structure to follow.  As we start to use modules we will recognise we have more freedom of choice and less structure and/or definition especially when you write your own private modules.  Public modules will still have clearly defined inputs and outputs.  With private modules you can choose what resources are in your modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out creating your modules this can be a little daunting as there isn't much guidance.  
@@ -78,7 +80,36 @@ In the following steps we are hoping you are now ready to refactor the code to u
 
 1. Refactor `network.tf` to use the public [VPC module](https://github.com/terraform-aws-modules/terraform-aws-vpc).  Then run terraform init and apply the changes in your root directory to confirm it all works before progressing to the next step.  It's important to point out an extra attribute 'single_nat_gateway' worth using otherwise by default you will create two NAT Gateways, one for each public subnet when in our case we just wish to create a single NAT Gateway in one of the public subnets.  There are also files which reference the VPC Id, public subnet and private subnet Ids, these will now have to reference the module's outputs for these values.
 
-2. I strongly recommend before the next refactor to run the Terraform destroy command in your root directory to remove all our AWS resources (you don't have to destroy the remote state management resources as well) because it will be easier to refactor without getting conflicts with existing resources.  Now we should create a modules folder in the root directory.  We should also create a folder called ecs inside the modules folder, this will be the location for a new private module.  Move the ecs related files (`ecs.tf`, `ecr.tf` and `iam-ecs.tf`) into the ecs folder and create a new `ecs.tf` file at your root directory.  This new `ecs.tf` file should reference your new private module.  You need to work out what variables need to be passed in as well as outputs need to be passed out of this module for Terraform to work successfully (therefore the module will require a `variables.tf` and an `outputs.tf`).  Just like before rerun run the terraform init and apply in your root directory to confirm it all works before progressing to the next step.
+2. I strongly recommend before the next refactor to run the Terraform destroy command in your root directory to remove all our AWS resources (you don't have to destroy the remote state management resources as well) because it will be easier to refactor without getting conflicts with existing resources.  Now we should create a modules folder in the root directory.  We should also create a folder called ecs inside the modules folder, this will be the location for a new private module.  Move the ecs related files (`ecs.tf`, `ecr.tf` and `iam-ecs.tf`) into the ecs folder and create a new `ecs.tf` file at your root directory.  This new `ecs.tf` file should reference your new private module, I've provided the contents for it below (you need to fill in the question marks).
+
+```
+module "ecs" {
+  source = "./modules/ecs/"
+
+  prefix                = var.prefix
+  region                = var.region
+  vpc_id                = module.vpc.vpc_id
+  private_subnet_ids    = module.vpc.private_subnets
+  alb_target_group_arn  = ?
+  alb_security_group_id = ?
+}
+```
+
+The code above helps to identify what variables you require for the module (you can create a `variables.tf` inside the ECS module which will match these variables.  You should also create an `outputs.tf` in the ECS module with the following contents.
+
+```
+output "ecr_url" {
+  description = "The Elastic Container Registry (ECR) URL."
+  value       = aws_ecr_repository.api.repository_url
+}
+
+output "ecs_security_group_id" {
+  description = "ECS Security group Id"
+  value       = aws_security_group.ecs.id
+}
+```
+
+Just like before rerun run the terraform init, plan and apply in your root directory to confirm it all works before progressing to the next step.
 
 3. Commit your working code to your repo.
 
@@ -87,7 +118,7 @@ In the following steps we are hoping you are now ready to refactor the code to u
 
 Now we are going to add an RDS instance to your AWS solution using Terraform and hopefully have a working REST API up and running.  The database requires a password and we do not wish to create the password in Terraform otherwise it will be stored in the state file in plain text which is why we will manually create it in Secrets Manager instead.  Once the solution is up and running we should be able to use curl commands to interact with a REST API exposed via the load balancer.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
-1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of 'db_password' and in the value field next to it enter a value for the password which complies with the following password requirements:
+1. Using the AWS Console (UI) manually create a new secret (create your own secret) in AWS Secret Manager, select 'Other type of secret' and in the key value pair fields enter a key of `db_password` and in the value field next to it enter a value for the password which complies with the following password requirements:
 
 - Nine characters
 - Two uppercase letters
@@ -99,19 +130,73 @@ After clicking next, name the secret `dev/db<your-initials>` (obviously add your
 
 2. Now copy the file `RDS.tf` from this folder to your solution.  Notice in there the use of data resources to access secret manager to get the database password you have created (please update the name attribute value for `aws_secretsmanager_secret` to match the name of the password you created in the previous step).
 
-3. Add new variables in `variables.tf` in your root directory for db_username (with a value of 'postgres') and db_name (also with a value of 'postgres').  Ensure the values are provided through your tfvars file.
+3. Add the following new variables in `variables.tf` in your root directory.  Add the exact same value of 'postgres' for both of these variables in your tfvars file.
 
-4. In your ECS module ensure you have an output for the repository_url and expose that output to your root `outputs.tf` as well.
+```
+variable "db_username" {
+  type        = string
+  description = "Database username"
+}
 
-5. Also in the `outputs.tf` in your root directory add the load balancer dns_name with a prefix of `http://` and a suffix of `/users`\ so the value provides a properly formatted URL.
+variable "db_name" {
+  type        = string
+  description = "Database name"
+}
+```
 
-6. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source as well as `aws_iam_policy` and `aws_iam_role_policy_attachment` resources which associate it with your IAM role.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
+4. Expose the ECS module output for ecr_url in your root `outputs.tf` as well.
 
-7. Copy the contents of container.json in this folder over the top of container.json in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
+5. Also in the `outputs.tf` in your root directory you can add the following code which will provide the load balancer dns_name with a prefix of `http://` and a suffix of `/users`\ so the value provides a properly formatted URL for your REST API.
+
+```
+output "website_url" {
+  description = "The website URL."
+  value       = format("http://%s/users", aws_alb.this.dns_name)
+}
+```
+
+6. Change `ecs.tf` file in the root directory from this.
+
+```
+module "ecs" {
+  source = "./modules/ecs/"
+
+  prefix                = var.prefix
+  region                = var.region
+  vpc_id                = module.vpc.vpc_id
+  private_subnet_ids    = module.vpc.private_subnets
+  alb_target_group_arn  = ?
+  alb_security_group_id = ?
+}
+```
+
+To this and like before please fill in the question marks.  Notice that we've specifically chosen the input variables to our private module along with the output variables in steps 4 and 5 above.  We've also chosen to include the ECR resource and IAM resources in our ECS module as it made a sensible logical grouping.
+
+```
+module "ecs" {
+  source = "./modules/ecs/"
+
+  prefix                = var.prefix
+  region                = var.region
+  vpc_id                = module.vpc.vpc_id
+  private_subnet_ids    = module.vpc.private_subnets
+  alb_target_group_arn  = ?
+  alb_security_group_id = ?
+  db_address            = ?
+  db_name               = ?
+  db_username           = ?
+  db_secret_arn         = ?
+  db_secret_key_id      = ?
+}
+```
+
+7. Copy the contents of `container.json` in this folder over the top of `container.json` in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
 
 8. Copy the contents of `ecs-task-definition.tf` in this folder and replace the existing ECS task definition which should be in a Terraform file inside your ECS module.  You'll recognise that you will need to pass in extra variables to your ECS module (e.g. var.db_name, var.db_username, etc).
 
-9. This next step will depend on whether you are running an M1 chipset (ARM architecture) on your laptop or not.  The ECS Task Definition resource you just copied across has an attribute for runtime_platform.  This needs to be set as ARM64 if you are running an M1 chipset and X86_64 if you are not (this is to allow for the fact you will build and push an ARM based image for consumption):
+9. Copy the contents of `extra-iam-permissions.tf` in this folder and append it to the end of `iam-ecs.tf`.  The contents you've copied is simply the permissions as a data source as well as `aws_iam_policy` and `aws_iam_role_policy_attachment` resources which associate it with your IAM role.  You will also need to pass two new variables into the ECS module for the IAM permissions to access the secret (see references to var.db_secret_arn and var.db_secret_key_id).  This allows the container to access and decrypt the secret as it uses it in its connection string for the database connection.
+
+10. This next step will depend on whether you are running an M1 chipset (ARM architecture) on your laptop or not.  The ECS Task Definition resource you just copied across has an attribute for runtime_platform.  This needs to be set as ARM64 if you are running an M1 chipset and X86_64 if you are not (this is to allow for the fact you will build and push an ARM based image for consumption):
 
 ```
   runtime_platform {
@@ -119,7 +204,7 @@ After clicking next, name the secret `dev/db<your-initials>` (obviously add your
   } 
 ```
 
-10. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
+11. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
 
 ```
 terraform init
@@ -129,16 +214,15 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors (it's expected there may be a few to work out) before proceeding to the next step. 
 
+12. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
 
-11. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
-
-12. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
+13. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state which may take a few minutes to correct itself.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
 
 ```
 curl -X GET http://<load_balancer_dns_name>/users 
 ```
 
-13. First I'll provide a little more information about the solution (a simple web based REST API) we've built and how to interact with it.  Using the web browser or curl command you can hit the load balancer's address with a path (/users) and a specified method (GET, POST, PUT, etc), the load balancer then routes this request to the ECS container which then passes its request in the form of SQL statements on to a Postgres database (RDS).  The REST API is extremely basic, there's no data validation or paramatisation from a security stand point, it provides CRUD capabilities for a basic working example for user data (you can easily give it bad data or do SQL injection).  To understand what data we should send the REST API you need to know the 'user' class which is defined as follows (Id is generated by the database):
+14. First I'll provide a little more information about the solution (a simple web based REST API) we've built and how to interact with it.  Using the web browser or curl command you can hit the load balancer's address with a path (/users) and a specified method (GET, POST, PUT, etc), the load balancer then routes this request to the ECS container which then passes its request in the form of SQL statements on to a Postgres database (RDS).  The REST API is extremely basic, there's no data validation or paramatisation from a security stand point, it provides CRUD capabilities for a basic working example for user data (you can easily give it bad data or do SQL injection).  To understand what data we should send the REST API you need to know the 'user' class which is defined as follows (Id is generated by the database):
 
 ```
 type User struct {
@@ -166,7 +250,7 @@ curl -X POST http://<load_balancer_dns_name>/users -d '{"name":"John Doe", "emai
 
 This should return a json object with an Id along with the data passed in.  This indicates that the command worked.  You can now either run a curl command or access the web browser at the address `http://<load_balancer_dns_name>/users` to confirm the user has been added.  You should be able to test out any of the REST API routes with this application.
 
-14. Commit your working code to your repo.
+15. Commit your working code to your repo.
 
 
 ### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
