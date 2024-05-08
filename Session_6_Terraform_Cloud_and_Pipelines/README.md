@@ -11,13 +11,15 @@ You will learn how to deploy using a CI/CD pipeline in GitHub Actions as well as
 
 ### Session 6 Goals
 
-1. Deploy your Terraform code using GitHub Actions.
+1. Deploy your Terraform code using GitHub Actions
 
-2. How to deploy using Terraform Cloud
+2. Learn how to run tests against Terraform
 
-3. Learn more about 3rd Party cost optimisation tools from a FinOps (cloud cost management) perspective.
+3. How to deploy using Terraform Cloud
 
-4. Provide feedback on session 6
+4. Learn more about 3rd Party cost optimisation tools from a FinOps (cloud cost management) perspective
+
+5. Provide feedback on session 6
 
 
 ### Architecture Diagram
@@ -104,7 +106,40 @@ cd tf_prerequisites
 terraform destroy --auto-approve
 ```
 
-### Steps/Tasks for Goals 2 (Optional) [Difficulty Rating: 6 (tricky)]
+### Steps/Tasks for Goals 2 (Optional) [Difficulty Rating: 3 (easy)]
+
+This is an optional easy exercise if you wish to learn more about how to run tests against Terraform code.  It uses the test framework which is built into the Terraform command line.
+
+1. Copy the file ./tests/aws_resources.tftest.hcl into your `tf_prerequisites` folder in your repo.
+
+2. Have a look at the structure of the file, it's running some test aseertions against the S3 bucket, the DynamoDB table and the IAM role which are resources that would be created using the code in this folder.
+
+3. In a terminal navigate to your `tf_prerequisites` folder in your repo and run the following.
+
+```
+terraform init
+terraform test
+```
+
+In theory you should see output similar to the following.
+
+```
+$ terraform test
+aws_resources.tftest.hcl... in progress
+  run "dynamoDb_tests"... pass
+  run "iam_tests"... pass
+aws_resources.tftest.hcl... tearing down
+aws_resources.tftest.hcl... pass
+
+Success! 2 passed, 0 failed.
+```
+
+If you don't see two passing tests see if you can correct the failing tests.
+
+4. See if you can extend the test file and add a new test to make an assertion for the S3 bucket name.
+
+
+### Steps/Tasks for Goals 3 (Optional) [Difficulty Rating: 6 (tricky)]
 
 We have made this task optional as it provides a simple example of how to work with Terraform Cloud.  For this task we will create a new very basic solution to help us learn how to deploy terraform code using Terraform Cloud using OIDC for authentication.
 
@@ -195,7 +230,7 @@ terraform destroy --auto-approve
 ```
 
 
-### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
+### Steps/Tasks for Goal 4 - FinOps [Difficulty Rating: 2 (easy)]
 
 1. The first and primary objective of this goal is to destroy your resources once you have finished using them.  TW can only fund this IaC course if cloud costs continue to be low therefore we need your help.  Please ensure you have completed the steps 16 and 17 in Goal 1 above to destroy your cloud resources.  If you were unable to destroy them using GitHub Actions you can run the following commands locally in the root of your repo that you've been using for all your session labs to destroy the AWS resources.
 
@@ -243,6 +278,6 @@ As well as using an external company to help manage your cloud costs you can als
 We've covered quite a few principles and practices as well as tools and services which all can help towards reducing your cloud costs.  That said I still believe that it's fundamentally about cloud users following good cloud management practices.  For example without any accountability and ownership for the creation of cloud resources makes cloud management really difficult and can cause cloud costs to easily spiral out of control.  As an infrastructure engineer you can't ignore cloud costs, you should take ownership of any resources you create and try to optimse your solutions with cost in mind.
 
 
-### Steps/Tasks for Goal 4 - Session Feedback [Difficulty Rating: 1 (easy)]
+### Steps/Tasks for Goal 5 - Session Feedback [Difficulty Rating: 1 (easy)]
 
 We can only make improvements if we receive feedback.  Please can you fill out this very short [survey](https://docs.google.com/forms/d/e/1FAIpQLSfeK9c64dJK7mvRv3rIVc95yajv6h_WT6lDyisM4ag76OoF3g/viewform) to help us understand what you liked or disliked and the learnings you've gained from this, thank you.
