@@ -43,7 +43,7 @@ function _retrieve_more_details {
         elif [[ $3 == "ECS" ]]; then
             DETAILS=$(aws ecs list-clusters --region ${4} | jq '.clusterArns[] | ("ARN: " + . + "!!")')
         elif [[ $3 == "NAT" ]]; then
-            DETAILS=$(aws ec2 describe-nat-gateways --region ${4} | jq '.NatGateways[] | "\(if .Tags | length > 0 then .Tags[]? | select(.Key == "Name" or (.Key | endswith("ame"))) | ("Name: " + .Value + ",") else "Name: -, " end ) \("Id: " + .NatGatewayId + ",") \("CreateTime: " + .CreateTime + "!!")"')
+            DETAILS=$(aws ec2 describe-nat-gateways --region ${4} --filter "Name=state,Values=available" | jq '.NatGateways[] | "\(if .Tags | length > 0 then .Tags[]? | select(.Key == "Name" or (.Key | endswith("ame"))) | ("Name: " + .Value + ",") else "Name: -, " end ) \("Id: " + .NatGatewayId + ",") \("CreateTime: " + .CreateTime + "!!")"')
         elif [[ $3 == "ALB" ]]; then
             DETAILS=$(aws elbv2 describe-load-balancers --region ${4} | jq '.LoadBalancers[] | "\("LBName: " + .LoadBalancerName + ",") \("CreateTime: " + .CreatedTime + "!!")"')
         elif [[ $3 == "VPC" ]]; then
@@ -140,7 +140,7 @@ do
 
     ### NAT Gateways
 
-    NAT_GATEWAYS=$(aws ec2 describe-nat-gateways --region ${REGION} | jq '.NatGateways | length')
+    NAT_GATEWAYS=$(aws ec2 describe-nat-gateways --region ${REGION} --filter "Name=state,Values=available" | jq '.NatGateways | length')
     _resource_check "NAT gateways" $NAT_GATEWAYS "YELLOW"
     _retrieve_more_details $NAT_GATEWAYS "YELLOW" "NAT" ${REGION}
 

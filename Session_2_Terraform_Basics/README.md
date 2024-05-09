@@ -21,6 +21,9 @@ If you don't understand or need to brush up on AWS VPCs and networking before st
 
 4. Provide feedback on session 2
 
+**Note:** I would like to stress that although it’s nice to complete all the lab goals it’s more important to learn and fully understand all the concepts and principles we are trying to teach you in each of these sessions.  If you are struggling for time then skip any optional goals and if you need help please reach out in the group chat.
+
+
 ### Architecture Diagram
 
 The network subnet design has been added in this session.

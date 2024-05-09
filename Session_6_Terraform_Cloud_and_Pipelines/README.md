@@ -21,6 +21,8 @@ You will learn how to deploy using a CI/CD pipeline in GitHub Actions as well as
 
 5. Provide feedback on session 6
 
+**Note:** I would like to stress that although it’s nice to complete all the lab goals it’s more important to learn and fully understand all the concepts and principles we are trying to teach you in each of these sessions.  If you are struggling for time then skip any optional goals and if you need help please reach out in the group chat.
+
 
 ### Architecture Diagram
 

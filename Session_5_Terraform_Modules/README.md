@@ -19,6 +19,8 @@ You will learn how to implement both public and private modules as well as creat
 
 4. Provide feedback on session 5
 
+**Note:** I would like to stress that although it’s nice to complete all the lab goals it’s more important to learn and fully understand all the concepts and principles we are trying to teach you in each of these sessions.  If you are struggling for time then skip any optional goals and if you need help please reach out in the group chat.
+
 
 ### Architecture Diagram
 
