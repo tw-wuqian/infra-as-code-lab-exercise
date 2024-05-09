@@ -8,9 +8,9 @@ You will learn how to authenticate with AWS via the command line and then get ac
 
 ### Session 1 Goals
 
-1. Authenticate with AWS.
+1. Authenticate with AWS and write and deploy Terraform code to create an AWS VPC.
 
-2. Write and deploy Terraform code to create an AWS VPC.
+2. As a comparison to Terraform run cloudformation to create and destroy a VPC.
 
 3. Learn what FinOps is and why it is important for an Infrastructure Engineer to understand.
 
@@ -36,7 +36,7 @@ Hint: In the provider block, region variable or the \*.tfvars file there is a va
 We're providing a relative scale of difficulty ratings from 1 to 10 for all the steps/goals in the lab exercises.  A rating of 1 is super easy and a rating of 10 is super hard.  This will hopefully help provide you with an understanding of what to expect before starting the steps/goals.  As you progress through the sessions overall these lab exercises will increase in difficulty.
 
 
-### Steps/Tasks for Goals 1 and 2 [Difficulty Rating: 2 (easy)]
+### Steps/Tasks for Goal 1 [Difficulty Rating: 2 (easy)]
 
 1. Create a new private repo in GitHub and call it "iac-lab-exercises-<placeholder:add_your_name_or_initials>" and git clone it locally. Navigate to this repo as you will now work from this location for all the rest of the lab exercises.  We recommend making small commits to this repo at logicial moments throughout the session.  We also recommend committing your changes directly to the main branch throughout the labs, there should not be any need to create any branches.
 
@@ -92,6 +92,40 @@ terraform destroy
 ```
 
 9. We recommend committing your code to your repo if you haven't done so already.
+
+### Steps/Tasks for Goal 2 (Optional) [Difficulty Rating: 2 (easy)]
+
+Although this course focuses on Terraform, we want to give you some exposure to an alternative 'Infrastructure as Code' framework, in this case AWS Cloudformation.  The cloudformation examples are very simple, they will create a VPC just like you have already done with Terraform.  You will see two Cloudformation templates in this folder which you can test out, one is in yaml format and the other in json format but they do the same thing (create a VPC).
+
+1. To create a VPC using the yaml formatted Cloudformation template run the following (assuming you've already authenticated using the AWS CLI).  Obviously please update the placeholder with your intials.
+
+```
+aws cloudformation create-stack --stack-name iac-lab-cfn-yaml-<placeholder:add_your_name_or_initials> --template-body file://./cloudformation_template.yaml
+```
+
+2. Have a look in the AWS Console (UI) and see if your Cloudformation stack exists and if your VPC exists (make sure you check the correct region).  Assuming everything looks good let's delete it, again please update the placeholder with your intials.
+
+```
+aws cloudformation delete-stack --stack-name iac-lab-cfn-yaml-<placeholder:add_your_name_or_initials>
+```
+
+3. To create a VPC using the json formatted Cloudformation template run the following (assuming you've already authenticated using the AWS CLI).  Obviously please update the placeholder with your intials.
+
+```
+aws cloudformation create-stack --stack-name iac-lab-cfn-json-<placeholder:add_your_name_or_initials> --template-body file://./cloudformation_template.json
+```
+
+4. Again you can have a look in the AWS Console (UI) and see if your Cloudformation stack exists as well as your VPC.  Assuming everything looks good let's delete it, again please update the placeholder with your intials.
+
+```
+aws cloudformation delete-stack --stack-name iac-lab-cfn-json-<placeholder:add_your_name_or_initials>
+```
+
+If you are interested in finding out more about other 'Infrastructure as Code' frameworks you can visit these links.
+
+- [Extensive Comparison of IaC tools in 2024!](https://ibatulanand.medium.com/extensive-comparison-of-iac-tools-49118e962ef8)
+- [Differences between Infrastructure as Code (IaC) Tools](https://www.encora.com/insights/differences-between-infrastructure-as-code-iac-tools-used-for-provisioning-and-configuration-management)
+
 
 ### Steps/Tasks for Goal 3 - FinOps [Difficulty Rating: 2 (easy)]
 
