@@ -145,7 +145,7 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
         - load_balancer_arn = aws_alb.alb.arn
         - default_action = forward to the target group created in this file (`alb.tf`)
     - [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
-        - call this Terraform resource 'alb_sg' (this is the name it's referenced by in `ecs.tf`)    
+        - call this Terraform resource 'lb_sg' (this is the name it's referenced by in `ecs.tf`)    
         - vpc_id = the Id of the VPC
         - description = add a suitable description
         - 1 x ingress rule attribute, protocol = tcp, from and to port is 80, from source 0.0.0.0/0 (using the cidr_blocks attribute).  This allows anyone externally to reach the load balancer on the web port.
