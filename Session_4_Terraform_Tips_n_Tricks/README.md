@@ -114,7 +114,7 @@ Troubleshoot any errors before proceeding.
 
 ### Steps/Tasks for Goal 2 [Difficulty Rating: 6 (tricky)]
 
-We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
+We are adding an Application Load Balancer (ALB), ECR and an ECS Cluster, service and task to your AWS solution through your Terraform code.  We recommend continuing to make small commits of your changes to your repo at logicial moments throughout the session.
 
 1. Create `ecr.tf` in the root of your solution and add an [Elastic Container Registry (ECR)](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) resource with a friendly identifying tag name that utilises var.prefix similar to the other resources you've tagged and also maintain image_scanning_configuration block in the aws_ecr_repository resource.  Name this Terraform resource 'api' (this is the name it's referenced by in `ecs.tf`) and provide the ECR a name attribute that equals "${var.prefix}-crud-app".  Also add a force_delete attribute which has a value of true to your ECR.  The ECR is used to store your container images.
 
@@ -122,16 +122,16 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
 
 3. Create a directory templates at the root of your solution and copy container.json into it.  This is your container definition.  You should be able to see that this template file has placeholders for variables that will be passed in via the Terraform ECS task resource.
 
-4. Create `alb.tf` with the following ALB related resources and set their attributes as specified below.  It will create one application load balancer with an associated listener and security group.  It will also create an IP based target group linked to the load balancer which is referenced by the ECS Service in `ecs.tf` (aws_alb_target_group.this.arn). aws_alb is known as aws_lb. The functionality is identical.
-    - [aws_alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb)
-        - call this Terraform resource 'alb' (this is the name it's referenced by in `ecs.tf`)
+4. Create `lb.tf` with the following ALB related resources and set their attributes as specified below. Notice that, in Terraform resources, an application load balancer (alb) is named simply `aws_lb`. The `aws_lb` defaults to being an application load balancer when not specified otherwise. It will create one application load balancer with an associated listener and security group.  It will also create an IP based target group linked to the load balancer which is referenced by the ECS Service in `ecs.tf` (aws_lb_target_group.this.arn).
+    - [aws_lb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb)
+        - call this Terraform resource 'lb' (this is the name it's referenced by in `ecs.tf`)
         - load_balancer_type = application
         - internal = false
-        - security_groups = the Id of the security group created in this file (`alb.tf`)
+        - security_groups = the Id of the security group created in this file (`lb.tf`)
         - subnets = a list of all the public subnet Ids
-        - name the resource appropriately, e.g. var.prefix-alb 
-        - Add a Name tag that utilises the prefix, e.g. var.prefix-alb
-    - [aws_alb_target_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group)
+        - name the resource appropriately, e.g. var.prefix-lb 
+        - Add a Name tag that utilises the prefix, e.g. var.prefix-lb
+    - [aws_lb_target_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group)
         - call this Terraform resource 'tg' (this is the name it's referenced by in `ecs.tf`)
         - port = 8000
         - protocol = "HTTP"
@@ -139,11 +139,11 @@ We are adding an ALB, ECR and an ECS Cluster, service and task to your AWS solut
         - target_type = "ip"
         - health_check = copy the content from target_group_health_check.txt in this folder and add it as the health_check attribute
         - name the resource appropriately, e.g. var.prefix-tg 
-    - [aws_alb_listener](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener)
+    - [aws_lb_listener](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener)
         - port = 80
         - protocol = "HTTP"
-        - load_balancer_arn = aws_alb.alb.arn
-        - default_action = forward to the target group created in this file (`alb.tf`)
+        - load_balancer_arn = aws_lb.lb.arn
+        - default_action = forward to the target group created in this file (`lb.tf`)
     - [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
         - call this Terraform resource 'lb_sg' (this is the name it's referenced by in `ecs.tf`)    
         - vpc_id = the Id of the VPC
