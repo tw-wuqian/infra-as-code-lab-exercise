@@ -40,7 +40,7 @@ resource "aws_ecs_service" "this" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.tg.arn
+    target_group_arn = aws_lb_target_group.tg.arn
     container_name   = "example_app"
     container_port   = 8000
   }
