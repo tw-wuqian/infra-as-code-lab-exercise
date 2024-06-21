@@ -213,7 +213,7 @@ variable "TFC_AWS_RUN_ROLE_ARN" {
 9. In the Terraform Cloud, navigate to your workspace and add the following workspace variables:
 
 - TFC_AWS_PROVIDER_AUTH = true
-- TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the name used in `iam-terraform-cloud.tf` for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
+- TFC_AWS_RUN_ROLE_ARN = "tw_iac_demo_terraform_cloud_role" (this should match the ARN used in `iam-terraform-cloud.tf` for the IAM role using your prefix, you can also search for the role in the AWS Console in IAM roles)
 
 10. Run the following command and follow the instructions:
 
