@@ -33,7 +33,7 @@ Users connect to the application through a public facing load balancer which has
 
 Please read the root level [README](../README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
 
-Please make sure you have Docker installed and running. If you currently do not have it installed, check the [colima](https://github.com/abiosoft/colima) project for instructions on how to set it up.
+Please make sure you have Docker installed and running. If you currently do not have it installed, check out the instructions for setting up [Rancher Desktop](https://docs.google.com/document/d/1aWsFkANawEG_LHe1-zKB7e3UERtS53sdUX1h_qnH9uE/edit?usp=sharing).
 
 Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 
