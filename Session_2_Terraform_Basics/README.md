@@ -2,7 +2,7 @@
 
 ## Session 2 - Terraform Basics
 
-These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding.
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding. This lab assumes you understand [subbet types and routing](https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html).
 
 ### Overview
 
@@ -27,6 +27,10 @@ If you don't understand or need to brush up on AWS VPCs and networking before st
 ### Architecture Diagram
 
 The network subnet design has been added in this session.
+
+* **Availability Zone A:** Resources in a public subnet have a direct route to an internet gateway. Resources in the private subnet do not.
+* **Availability Zone B:** Resources in the public subnet have a NAT gateway, from which resources in the private subnet can use to access the internet. 
+For more information, read the [documentation on NAT gateway use cases](https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-scenarios.html)
 
 ![Architecture diagram](../images/AWS_Architecture_Session_2.png)
 
