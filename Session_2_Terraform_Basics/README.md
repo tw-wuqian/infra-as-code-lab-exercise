@@ -157,7 +157,7 @@ terraform plan -var-file="dev.tfvars"
 terraform apply -var-file="dev.tfvars"
 ```
 
-Troubelshoot any errors and have a look in the AWS Console to ensure your VPC and networking resoures look ok, correct tags, routes, associations, etc.
+Troubleshoot any errors and have a look in the AWS Console to ensure your VPC and networking resoures look ok, correct tags, routes, associations, etc.
 
 14. Commit your working code to your repo.
 
