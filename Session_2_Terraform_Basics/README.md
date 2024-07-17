@@ -147,7 +147,7 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.
 
-12. Lastly we would like to get an output varaible of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
+12. Lastly we would like to get an output variable of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
 
 13. Run the following commands to test deploying your updated network resources:
 
