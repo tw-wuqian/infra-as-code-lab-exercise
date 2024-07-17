@@ -147,7 +147,7 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.
 
-12. Lastly we would like to get an output varaible of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
+12. Lastly we would like to get an output variable of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
 
 13. Run the following commands to test deploying your updated network resources:
 
@@ -157,7 +157,7 @@ terraform plan -var-file="dev.tfvars"
 terraform apply -var-file="dev.tfvars"
 ```
 
-Troubelshoot any errors and have a look in the AWS Console to ensure your VPC and networking resoures look ok, correct tags, routes, associations, etc.
+Troubleshoot any errors and have a look in the AWS Console to ensure your VPC and networking resoures look ok, correct tags, routes, associations, etc.
 
 14. Commit your working code to your repo.
 
