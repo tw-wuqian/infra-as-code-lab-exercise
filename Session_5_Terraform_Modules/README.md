@@ -220,6 +220,8 @@ Troubleshoot any errors (it's expected there may be a few to work out) before pr
 
 12. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
 
+As a example of pushing docker images, you can watch this video: https://youtu.be/O3792WllJmA?si=9WhA5j4e0j0kdjzG&t=186
+
 13. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state which may take a few minutes to correct itself.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
 
 ```
