@@ -105,6 +105,20 @@ Run the following command to view the resources that Terraform created:
 terraform state list
 ```
 
+> [!TIP]
+> During these exercises, as seen in the videos, if you save variable values in a file with `.tfvars`, you must specify this as a parameter to Terraform. Otherwise, when you run commands like `terraform plan` or `terraform apply`, it will prompt you for the relevant variable values.
+
+> As mentioned in the video, if you end the name of your variable file with `.auto.tfvars`, Terraform will automatically take these as default parameters without needing any additional input. Otherwise, you can use it as follows:
+
+```bash
+terraform plan -var-file=example.tfvars
+```
+> or
+
+```bash
+terraform apply --var-file example.tfvars
+```
+
 ### Destroy Instructions:
 
 Run the following command to destroy all the resources:
