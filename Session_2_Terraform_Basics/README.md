@@ -2,7 +2,7 @@
 
 ## Session 2 - Terraform Basics
 
-These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding. This lab assumes you understand [subbet types and routing](https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html).
+These lab exercises are to be completed in order, you will need to have completed the lab exercise for session 1 before proceeding. This lab assumes you understand [subnet types and routing](https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html).
 
 ### Overview
 
