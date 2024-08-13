@@ -78,6 +78,17 @@ terraform apply --auto-approve
 
 6. Confirm that the VPC was successfully created and tagged by inspecting the AWS resources either via the AWS CLI or via the AWS console.
 
+AWS CLI:
+```
+aws ec2 describe-vpcs --region <placeholder:add_your_aws_region> --filters Name=tag:Name,Values=iac-lab-<placeholder:add_your_name_or_initials>
+```
+
+AWS Console:
+
+Use the "Thoughtworks - AWS" chiclet in Okta to access the AWS Console. Instructions on how to add this chiclet can be found [here](https://github.com/twlabs/infra-as-code-aws-foundations-exercises/blob/main/BEACH.md). Use the AWS Access Portal to access the PowerUserPlusRole for the TW account.
+
+Once you reach the Console Home, use the Search Bar at the top of the page for search for VPC resources and see if you can locate the one you created. Remember to check that the regions match!
+
 7. Run the following command to destroy the created VPC resource:
 
 ```
