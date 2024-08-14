@@ -87,7 +87,7 @@ AWS Console:
 
 Use the "Thoughtworks - AWS" chiclet in Okta to access the AWS Console. Instructions on how to add this chiclet can be found [here](https://github.com/twlabs/infra-as-code-aws-foundations-exercises/blob/main/BEACH.md). Use the AWS Access Portal to access the PowerUserPlusRole for the TW account.
 
-Once you reach the Console Home, use the Search Bar at the top of the page to search for VPC resources; try entering "VPC" into the search bar in order to list the VPC resources in the selected region. See if you can locate the one you created. Remember to check that the regions match!
+Once you reach the Console Home, use the Search Bar at the top of the page to search for VPC resources; try entering "VPC" into the search bar in order to find a page that lists the VPC resources in the selected region. See if you can locate the one you created. Remember to check that the regions match!
 
 7. Run the following command to destroy the created VPC resource:
 
