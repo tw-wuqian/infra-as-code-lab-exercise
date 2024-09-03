@@ -194,7 +194,7 @@ module "ecs" {
 }
 ```
 
-7. Copy the contents of `container.json` in this folder over the top of `container.json` in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
+7.Replace the entire content of container.json in your templates folder with container.json in the root folder (if needed, we may add hyperlink to the root file). Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
 
 8. Copy the contents of `ecs-task-definition.tf` in this folder and replace the existing ECS task definition which should be in a Terraform file inside your ECS module.  You'll recognise that you will need to pass in extra variables to your ECS module (e.g. var.db_name, var.db_username, etc).
 
