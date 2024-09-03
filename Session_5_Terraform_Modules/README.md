@@ -49,7 +49,7 @@ For the next two goals you may notice that in many of these steps we're helping 
 
 In the following steps we will refactor the code to use both public and private modules.
 
-Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too, giving you a clear structure to follow.  As we start to use modules we will recognise we have more freedom of choice and less structure and/or definition especially when you write your own private modules.  Public modules will still have clearly defined inputs and outputs.  With private modules you can choose what resources are in your modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out creating your modules this can be a little daunting as there isn't much guidance.  
+Before we dive into the refactoring to add Terraform modules I would like to make it clear that up until this point we've just been coding with mostly resource blocks which are all clearly defined.  The Terraform Registry explicitly outlines all the optional and required inputs along with what outputs are exposed too, giving you a clear structure to follow.  As we start to use modules we will recognise we have more freedom of choice and less structure and/or definition especially when you write your own private modules.  Public modules will still have clearly defined inputs and outputs.  With private modules you can choose what resources are in your modules (can be as much or as little as you want) and you can choose what inputs and outputs you expose.  When starting out creating your modules this can be a little daunting as there isn't much guidance.
 
 I'll provide a basic example to explain this in more depth.  Let's assume we are writing a private module for an S3 bucket, we might simply express it like this.
 
@@ -194,7 +194,7 @@ module "ecs" {
 }
 ```
 
-7. Copy the contents of `container.json` in this folder over the top of `container.json` in your templates folder.  Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
+7. Replace the entire content of `container.json` in your templates folder with [`container.json` in the root folder](./container.json). Notice it has some extra environment variables and a secret that is being passed in which create the database connection for the application to connect to the database.
 
 8. Copy the contents of `ecs-task-definition.tf` in this folder and replace the existing ECS task definition which should be in a Terraform file inside your ECS module.  You'll recognise that you will need to pass in extra variables to your ECS module (e.g. var.db_name, var.db_username, etc).
 
@@ -205,7 +205,7 @@ module "ecs" {
 ```
   runtime_platform {
     cpu_architecture = "ARM64" # "ARM64" or "X86_64"
-  } 
+  }
 ```
 
 11. That's quite a fair amount of refactoring, now for the moment of truth, run the following commands to test deploying your updated solution:
@@ -216,7 +216,7 @@ terraform plan -var-file="dev.tfvars"
 terraform apply -var-file="dev.tfvars"
 ```
 
-Troubleshoot any errors (it's expected there may be a few to work out) before proceeding to the next step. 
+Troubleshoot any errors (it's expected there may be a few to work out) before proceeding to the next step.
 
 12. Once all resources have been deployed successsfully you can now build and push our container image to ECR.  First navigate in your terminal to the crud_app folder within this folder.  Now access the AWS Console (UI) and go to ECR and locate your ECR repository.  Click on the link to go into your repository, you'll see there are no images at the moment.  There should be a button called 'View push commands'.  Click on that button and a pop up will appear with instructions on how to authenticate with ECR and tag and push our image to ECR (please follow these instructions to push your image to your ECR).
 
@@ -225,7 +225,7 @@ As a example of pushing docker images, you can watch this video: https://youtu.b
 13. Once the image has been uploaded into the ECR repository successfully you can then check ECS to see if this has fixed the ECS task service which would have been failing.  It should now be in a running state which may take a few minutes to correct itself.  If not then please check the ECS task logs and the ECS Service events to troubleshoot any issues.  Assuming there are no errors and the ECS task is in a running state you can now access the REST API using a GET method with your web browser.  The URL should be in the output of your Terraform, it will be in the format of `http://<load_balancer_dns_name>/users` which should return an empty array on screen.  You are now ready to test the REST API.
 
 ```
-curl -X GET http://<load_balancer_dns_name>/users 
+curl -X GET http://<load_balancer_dns_name>/users
 ```
 
 14. First I'll provide a little more information about the solution (a simple web based REST API) we've built and how to interact with it.  Using the web browser or curl command you can hit the load balancer's address with a path (/users) and a specified method (GET, POST, PUT, etc), the load balancer then routes this request to the ECS container which then passes its request in the form of SQL statements on to a Postgres database (RDS).  The REST API is extremely basic, there's no data validation or paramatisation from a security stand point, it provides CRUD capabilities for a basic working example for user data (you can easily give it bad data or do SQL injection).  To understand what data we should send the REST API you need to know the 'user' class which is defined as follows (Id is generated by the database):
@@ -291,7 +291,7 @@ It also doesn't take long to double check by logging in to the AWS console to ve
 | ECS                 | 1         | 43.22           | 518.64        | 1 x CPU, 2GB RAM                              |
 | SecretsManager      | 1         | 0.40            | 4.80          | 4 x API calls per month                       |
 | RDS                 | 1         | 45.41           | 544.92        | 1 x db.t3.small, 30 GB snapshot storage       |
-| **Total**           | -         | **160.41**      | **1938.32**   |                                               |  
+| **Total**           | -         | **160.41**      | **1938.32**   |                                               |
 
 Note: Costs vary per region and will fluctuate due to AWS price changes and exchange rates, the prices above are for the Sydney region at the time of the README creation and are in USD.
 
