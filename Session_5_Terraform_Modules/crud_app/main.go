@@ -20,7 +20,7 @@ type User struct {
 
 func main() {
 	psqlInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",os.Getenv("db_address"), os.Getenv("db_username"), os.Getenv("db_password"), os.Getenv("db_name"))
-	fmt.Printf("(just for troubleshooting: the connection string is %d\n", psqlInfo)
+	fmt.Printf("(just for troubleshooting: the connection string is %s\n", psqlInfo)
 
 	//connect to database
 	db, err := sql.Open("postgres", psqlInfo)
