@@ -1,4 +1,5 @@
-resource "aws_db_instance" "database" {  
+
+resource "aws_db_instance" "database" {
   allocated_storage      = 10
   engine                 = "postgres"
   engine_version         = "16.2"
@@ -29,7 +30,7 @@ resource "aws_db_parameter_group" "pg" {
 }
 
 data "aws_secretsmanager_secret" "db" {
-  name = "dev/db"
+  name = "dev/db-demo"
 }
 
 data "aws_secretsmanager_secret_version" "db" {

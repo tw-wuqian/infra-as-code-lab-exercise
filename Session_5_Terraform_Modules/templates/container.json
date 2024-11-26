@@ -22,7 +22,7 @@
           {
             "name": "db_address",
             "value": "${db_address}"
-          },           
+          },
           {
             "name": "db_name",
             "value": "${db_name}"
@@ -30,16 +30,16 @@
           {
             "name": "db_username",
             "value": "${db_username}"
-          }               
+          }
         ],
         "secrets": [
           {
             "name": "db_password",
             "valueFrom": "${db_password_arn}:db_password::"
           }
-        ],                 
+        ],
         "links": [],
         "command": [],
-        "entryPoint": []  
+        "entryPoint": []
     }
 ]

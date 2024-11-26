@@ -36,12 +36,12 @@ resource "aws_ecs_service" "this" {
 
   network_configuration {
     security_groups  = [aws_security_group.ecs.id]
-    subnets          = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+    subnets          = var.private_subnets
     assign_public_ip = false
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.tg.arn
+    target_group_arn = var.alb_target_group_arn
     container_name   = "example_app"
     container_port   = 8000
   }
@@ -54,6 +54,30 @@ resource "aws_ecs_service" "this" {
     aws_ecs_cluster.this
   ]
 }
+
+resource "aws_lb_target_group" "tg" {
+  name     = format("%s-tg", var.prefix)
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = module.vpc.vpc_id
+  target_type = "ip"
+
+  health_check {
+    interval            = 30
+    path                = "/"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+  }
+
+  tags = {
+    Name = format("%s-tg", var.prefix)
+  }
+}
+
+
+
 
 resource "aws_ecs_task_definition" "this" {
   family                   = format("%s-ecs-task-definition", var.prefix)
@@ -68,19 +92,28 @@ resource "aws_ecs_task_definition" "this" {
     image_url        = aws_ecr_repository.api.repository_url
     cloudwatch_group = aws_cloudwatch_log_group.ecs.name
     region           = var.region
+    db_address       = var.db_address
+    db_name          = var.db_name
+    db_username      = var.db_username
+    db_password_arn  = var.db_password_arn
   })
+
+  runtime_platform {
+#     cpu_architecture = "ARM64" # 如果是M1芯片，设置为"ARM64"
+    cpu_architecture = "X86_64" # 如果不是M1芯片，设置为"X86_64"
+  }
 }
 
 resource "aws_security_group" "ecs" {
   name   = format("%s-ecs-sg", var.prefix)
-  vpc_id = aws_vpc.qian-vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     description     = "Allow ALB access to ECS on port 8000"
     from_port       = 8000
     to_port         = 8000
     protocol        = "tcp"
-    security_groups = [aws_security_group.lb_sg.id]
+    security_groups = [var.alb_security_group_id]
   }
 
   egress {

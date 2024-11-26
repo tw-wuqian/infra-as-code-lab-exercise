@@ -3,7 +3,7 @@ resource "aws_vpc" "qian-vpc" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name = "qian-session3"
+    Name = "qian-vpc"
   }
 }
 

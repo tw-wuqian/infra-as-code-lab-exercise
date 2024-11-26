@@ -1,5 +1,5 @@
 locals {
-  gihub_oidc_already_exists = false
+  gihub_oidc_already_exists = true
 }
 resource "aws_iam_openid_connect_provider" "default" {
   count                       = local.gihub_oidc_already_exists ? 0 : 1
@@ -102,7 +102,7 @@ resource "aws_iam_role" "github_actions_role" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : format("repo:%s:*", var.repo_name)
+            "token.actions.githubusercontent.com:sub" : format("repo:%s:*/Session6:*", var.repo_name)
           },
           "ForAllValues:StringEquals" : {
             "token.actions.githubusercontent.com:iss" : "https://token.actions.githubusercontent.com",

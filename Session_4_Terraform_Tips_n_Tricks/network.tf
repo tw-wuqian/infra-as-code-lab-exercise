@@ -48,16 +48,6 @@ resource "aws_subnet" "private_subnet_2" {
   }
 }
 
-resource "aws_subnet" "secure_subnet_2" {
-  vpc_id            = aws_vpc.qian-vpc.id
-  cidr_block        = var.subnet6_cidr
-  availability_zone = "eu-central-1b"
-
-  tags = {
-    Name = format("%s-secure-subnet-2", var.prefix)
-  }
-}
-
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.qian-vpc.id
 
@@ -87,12 +77,21 @@ resource "aws_nat_gateway" "example" {
 }
 
 
-# import {
-#   to = aws_instance.example
-#   id = "i-abcd1234"
-# }
+locals {
+  public_subnets = [
+    aws_subnet.public_subnet_1,
+    aws_subnet.public_subnet_2
+  ]
+  private_subnets = [
+    aws_subnet.private_subnet_1,
+    aws_subnet.private_subnet_2
+  ]
+}
 
-# resource "aws_instance" "example" {
-#   name = "hashi"
-# }
+output "public_subnets" {
+  value = local.public_subnets
+}
 
+output "private_subnets" {
+  value = local.private_subnets
+}

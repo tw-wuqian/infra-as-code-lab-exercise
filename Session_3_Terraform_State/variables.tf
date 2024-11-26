@@ -3,12 +3,6 @@ variable "vpc_cidr" {
   description = "VPC CIDR block"
 }
 
-# terraform/variables.tf
-variable "prefix" {
-  description = "Prefix for resource names"
-  type        = string
-}
-
 variable "subnet1_cidr" {
   description = "CIDR block for subnet 1"
   type        = string
@@ -37,5 +31,17 @@ variable "subnet5_cidr" {
 variable "subnet6_cidr" {
   description = "CIDR block for subnet 6"
   type        = string
+}
+
+variable "prefix" {
+  description = "Prefix for resource names"
+  type        = string
+  default = "qian-iac"
+}
+
+variable "region" {
+  description = "region"
+  type        = string
+  default = "eu-central-1"
 }
 
