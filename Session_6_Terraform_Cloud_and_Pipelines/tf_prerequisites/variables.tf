@@ -7,5 +7,5 @@ variable "prefix" {
 variable "repo_name" {
   description = "GitHub repository name including the owner (e.g., OWNER/REPOSITORY)"
   type        = string
-  default     = "qianwu_mbg/your-repo-name"
+  default     = "tw-wuqian/infra-as-code-lab-exercise.git"
 }
