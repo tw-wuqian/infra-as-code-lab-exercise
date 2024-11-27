@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 env:
   AWS_REGION: ap-southeast-2
-  IAM_ROLE: arn:aws:iam::160071257600:role/tw-iac-demo-github-actions-role
+  IAM_ROLE: arn:aws:iam::160071257600:role/github-actions-role
 
 jobs:
 
@@ -27,6 +27,7 @@ jobs:
           role-session-name: GitHubActionsSession
           role-to-assume: ${{ env.IAM_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
 
       - name: Get aws identity
         run: |
