@@ -102,7 +102,7 @@ resource "aws_iam_role" "github_actions_role" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : format("repo:%s:*/Session6:*", var.repo_name)
+            "token.actions.githubusercontent.com:sub" : "repo:tw-wuqian/infra-as-code-lab-exercise:*"
           },
           "ForAllValues:StringEquals" : {
             "token.actions.githubusercontent.com:iss" : "https://token.actions.githubusercontent.com",
