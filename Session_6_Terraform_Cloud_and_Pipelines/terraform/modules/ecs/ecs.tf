@@ -55,26 +55,6 @@ resource "aws_ecs_service" "this" {
   ]
 }
 
-resource "aws_lb_target_group" "tg" {
-  name     = format("%s-tg", var.prefix)
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
-  target_type = "ip"
-
-  health_check {
-    interval            = 30
-    path                = "/"
-    protocol            = "HTTP"
-    timeout             = 5
-    healthy_threshold   = 5
-    unhealthy_threshold = 2
-  }
-
-  tags = {
-    Name = format("%s-tg", var.prefix)
-  }
-}
 
 
 
